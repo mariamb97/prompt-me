@@ -27,4 +27,4 @@ A prompt repository where users can add prompts and take inspiration for writtin
 ![Database tables draft](img/database_draft.svg)
 
 ## API routes draft
-![API routes draft](img/api_routes_draft.svg)
+![API routes draft](img/api_routes_draft.png)
