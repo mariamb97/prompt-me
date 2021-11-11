@@ -33,8 +33,7 @@ router.post("/", async function (req, res) {
       `INSERT INTO users (user_nickname, user_firstname, user_lastname, user_password) VALUES ("${req.body.user_nickname}", "${req.body.user_firstname}", "${req.body.user_lastname}","${req.body.user_password}" );`
     );
 
-    const results = await db("SELECT * FROM users;");
-
+    const results = await db("SELECT * FROM users ORDER BY user_id DESC LIMIT 1;");
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);

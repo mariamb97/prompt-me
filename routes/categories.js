@@ -15,6 +15,7 @@ router.get( '/', async function ( req, res) {
   }
 } );
 
+
 // GET a category
 router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
   res.send(req.category);
@@ -29,6 +30,17 @@ router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
 //   }
 } );
 
+      // SELECT 
+      //   prompts.prompt_description, 
+      //   prompts.prompt_requirements, 
+      //   prompts.prompt_links, 
+      //   users.user_firstname,
+      //   categories.category_name,
+      // FROM prompts 
+      //   INNER JOIN users ON prompts.user_id = users.user_id
+      //   INNER JOIN categories ON prompts.category_id = categories.category_id
+      // ;
+
 // INSERT a new category into the DB
 router.post("/", async function (req, res) {
   try {
@@ -36,7 +48,9 @@ router.post("/", async function (req, res) {
       `INSERT INTO categories (category_name, category_description, user_id) VALUES ("${req.body.category_name}", "${req.body.category_description}", "${req.body.user_id}");`
     );
 
-    const results = await db("SELECT * FROM categories;");
+    const results = await db(
+      "SELECT * FROM categories ORDER BY category_id DESC LIMIT 1;"
+    );
 
     res.status(201).send(results.data);
   } catch (err) {

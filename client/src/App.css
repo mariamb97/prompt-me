@@ -1,3 +1,169 @@
+#root {
+    max-width: 1000px;
+    width: 80%;
+    min-width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gainsboro;
+    margin-bottom: 30px;
+}
+
+#logo {
+    flex-basis: 20%;
+}
+
+#logo img {
+    max-width: 80%;
+    min-width: 75%;
+}
+
+nav {
+    flex-basis: 70%;
+    margin: 0 10px;
+
+}
+
+#avatar {
+    flex-basis: 10%;
+}
+
+#avatar img {
+    width: 40%;
+}
+
+nav ul {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 0 15px;
+}
+
+ul {
+    padding: 0;
+}
+
 li {
+    list-style: none;
+    margin: 0 5px;
+    padding: 5px 5px;
+}
+
+nav li {
+    text-align: center;
+
+}
+
+nav a {
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: red;
+}
+
+#home article {
+    padding: 15px;
+    border: 1px solid gainsboro;
+    margin: 10px 0;
+    color: rgb(78, 78, 78);
+}
+
+form {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;  
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form div {
+    flex-basis: 50%;
+        margin: 10px 0px;
+
+}
+
+label {
+    display: block;
+    padding: 5px 0px;
+}
+
+input {
+    box-shadow: 1px 1px 1px rgb(52, 54, 63);
+    width: 90%;
+    height: 30px;
+    box-sizing: border-box;
+    border-color: rgb(52, 54, 63);
+}
+
+#description {
+    flex-basis: 100%;
     
 }
+
+#description textarea {
+    width: 100%;
+    box-shadow: 1px 1px 1px rgb(52, 54, 63);
+    border-color: rgb(52, 54, 63);
+    box-sizing: border-box;
+
+}
+
+form button {
+    margin: 20px auto;
+    width: 20%;
+    padding: 5px;
+    background-color: transparent;
+}
+
+#categories_nav {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#categories_nav ul {
+    display: flex;
+    margin: 0;
+}
+
+#categories_nav button {
+    padding: 5px 20px;
+}
+
+#user_actions {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+#user_actions > article {
+    flex-basis: 40%;
+    border: 1px solid gainsboro;
+    padding: 20px;
+    text-align: center;
+}
+
+#user_login form {
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+

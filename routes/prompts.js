@@ -3,14 +3,30 @@ var router = express.Router();
 const db = require( "../model/helper" );
 const promptMustExist = require("../guards/promptMustExist");
 
-
 /* GET home page. */
 router.get( '/', async function ( req, res) {
   try {
-    const results = await db( "SELECT * FROM prompts;" );
-    res.send( results.data );
+    const results = await db(
+      "SELECT prompts.prompt_id, prompts.prompt_description, prompts.prompt_requirements, prompts.prompt_links, prompts.category_id, users.user_nickname, categories.category_name FROM prompts INNER JOIN users ON prompts.user_id = users.user_id INNER JOIN categories ON prompts.category_id = categories.category_id;"
+    );
+
+    /*
+      SELECT 
+        prompts.prompt_description, 
+        prompts.prompt_requirements, 
+        prompts.prompt_links, 
+        users.user_firstname,
+        categories.category_name,
+      FROM prompts 
+        INNER JOIN users ON prompts.user_id = users.user_id
+        INNER JOIN categories ON prompts.category_id = categories.category_id
+      ;
+
+    */
+    // SELECT * FROM prompts;
+    res.send(results.data);
   } catch ( err ) {
-    res.status(500).send(err);
+    res.status(500).send("error: "+err);
   }
 } );
 
@@ -35,7 +51,9 @@ router.post("/", async function(req, res) {
     await db(
       `INSERT INTO prompts (prompt_description, prompt_requirements, prompt_links, category_id, user_id) VALUES ("${req.body.prompt_description}", "${req.body.prompt_requirements}", "${req.body.prompt_links}", "${req.body.category_id}", "${req.body.user_id}");`
     );
-    const results = await db("SELECT * FROM prompts;");
+    const results = await db(
+      "SELECT * FROM prompts ORDER BY prompt_id DESC LIMIT 1;"
+    );
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);
