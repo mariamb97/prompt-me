@@ -18,7 +18,6 @@ export default function AddCategory() {
 
   const addCategory = async () => {
     if ( name && description && userId ) {
-      console.log("hello")
       try {
         const res = await fetch( "/categories", {
           method: "POST",
@@ -51,7 +50,6 @@ export default function AddCategory() {
     }
   }
 
-
     return (
       <section>
         <h1>Add New Category</h1>
@@ -66,7 +64,15 @@ export default function AddCategory() {
                 onChange={(e) => handleChangeName(e)}
               />
             </div>
-
+            <div id="description">
+              <label htmlFor="input_description">Description</label>
+              <input
+                id="input_description"
+                name="input_description"
+                value={description}
+                onChange={(e) => handleChangeDescription(e)}
+              ></input>
+            </div>
             <div>
               <label htmlFor="input_userId">User Id</label>
               <input
@@ -77,32 +83,22 @@ export default function AddCategory() {
                 onChange={(e) => handleChangeUserId(e)}
               />
             </div>
-            <div id="description">
-              <label htmlFor="input_description">Description</label>
-              <textarea
-                id="input_description"
-                name="input_description"
-                value={description}
-                onChange={(e) => handleChangeDescription(e)}
-              ></textarea>
-            </div>
             <button type="submit">Submit</button>
           </form>
         </section>
         <section>
           {alert && <p>{alert}</p>}
-          { category && (
+          {category && (
             <div>
-            <div>
-              <p>Name: {category.category_name}</p>
-              <p>Description: {category.category_description}</p>
-              <p>Author: {category.user_id}</p>
-              
+              <div>
+                <p>Name: {category.category_name}</p>
+                <p>Description: {category.category_description}</p>
+                <p>Author: {category.user_id}</p>
               </div>
               <p>
                 Check all the prompts <a href="/">here.</a>
               </p>
-              </div>
+            </div>
           )}
         </section>
       </section>

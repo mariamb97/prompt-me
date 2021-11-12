@@ -8,7 +8,9 @@ import AddUser from "./components/AddUser";
 import User from "./components/User";
 import AddCategory from "./components/AddCategory";
 import Header from "./components/Header";
+import Categories from "./components/Categories";
 import Category from "./components/Category";
+
 
 function App() {
   return (
@@ -20,12 +22,12 @@ function App() {
         <Route path="/register" element={<AddUser />} />
         <Route path="/add" element={<AddPrompt />} />
         <Route path="profile" element={<User />} />
-        <Route path="/category" element={ <Category /> } >
-          <Route path="/category/:name" element={ <Category /> } />
+        <Route path="/categories" element={ <Categories /> } >
+            <Route path="add" element={<AddCategory />} />
+            <Route path=":id" element={ <Category /> } />
           </Route>
 
         
-        <Route path="/category/add" element={<AddCategory />} />
       </Routes>
       </BrowserRouter>
     </div>

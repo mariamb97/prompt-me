@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function AddPrompt() {
 
@@ -6,21 +6,35 @@ export default function AddPrompt() {
     let [prompt, setPrompt] = useState(null);
     let [description, setDescription] = useState("");
     let [requirements, setRequirements] = useState("");
-    let [links, setLinks] = useState("");
-    let [categories, setCategories ] = useState( "" );
-    let [userId, setUserId] = useState("");
+    let [categories, setCategories ] = useState( "");
+    let [ userId, setUserId ] = useState( "" );
+    let [ listCategories, setListCategories ] = useState( [] );
     
     const handleChangeDescription = (e) => setDescription(e.target.value);
     const handleChangeRequirements = (e) => setRequirements(e.target.value);
-    const handleChangeLinks = (e) => setLinks(e.target.value);
     const handleChangeCategories = (e) => setCategories(e.target.value);
-    const handleChangeUserId = ( e ) => setUserId( e.target.value );
+  const handleChangeUserId = ( e ) => setUserId( e.target.value );  
+  
+  useEffect(() => {
+    getCategories();
+  }, [] );
     
     const handleSubmit = ( e ) => {
         e.preventDefault();
         console.log(description, categories, userId)
         addPrompt();
     }
+  
+    const getCategories = async () => {
+      try {
+        const res = await fetch("/categories", {});
+        const listCategories = await res.json();
+        setListCategories(listCategories);
+      } catch (err) {
+        console.log(err);
+        setAlert(err);
+      }
+    };
 
     const addPrompt = async () => {
         if (description && categories && userId) {
@@ -33,7 +47,6 @@ export default function AddPrompt() {
               body: JSON.stringify({
                 prompt_description: description,
                 prompt_requirements: requirements,
-                prompt_links: links,
                 user_id: userId,
                 category_id: categories,
               }),
@@ -41,7 +54,6 @@ export default function AddPrompt() {
                 
                 setDescription( "" );
                 setRequirements("");
-                setLinks("");
                 setCategories( "" );
                 setUserId( "" );
                 
@@ -66,45 +78,44 @@ export default function AddPrompt() {
         <h1>Add New Prompt</h1>
         <section>
           <form onSubmit={(e) => handleSubmit(e)}>
-            <div id="description">
+            <div className="textarea">
               <label htmlFor="input_description">Description*</label>
               <textarea
                 id="input_description"
                 name="input_description"
                 rows="5"
-                required            
+                required
                 value={description}
                 onChange={(e) => handleChangeDescription(e)}
               ></textarea>
             </div>
-            <div>
-              <label htmlFor="input_requirements">Requirements</label>
-              <input
+            <div className="textarea">
+              <label htmlFor="input_requirements">
+                Requirements (separate with "|")
+              </label>
+              <textarea
                 id="input_requirements"
                 name="input_requirements"
                 value={requirements}
                 onChange={(e) => handleChangeRequirements(e)}
-              />
-            </div>
-            <div>
-              <label htmlFor="input_links">Links</label>
-              <input
-                id="input_links"
-                name="input_links"
-                value={links}
-                onChange={(e) => handleChangeLinks(e)}
-              />
+              ></textarea>
             </div>
             <div>
               <label htmlFor="input_categories">Categories*</label>
-              <input
+              <select
                 id="input_categories"
                 name="input_categories"
-                required
-                type="number"
                 value={categories}
                 onChange={(e) => handleChangeCategories(e)}
-              />
+              >
+                <option>Choose a category</option>
+                {listCategories &&
+                  listCategories.map((categoryElement, i) => (
+                    <option key={i} value={`${categoryElement.category_id}`}>
+                      {categoryElement.category_name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <div>
               <label htmlFor="input_userId">User ID*</label>
@@ -125,13 +136,17 @@ export default function AddPrompt() {
           {alert && <p>{alert}</p>}
           {prompt && (
             <div>
-              <p>This new prompt has been added: </p>
+              <div>
+                <p>This new prompt has been added: </p>
 
-              <p>{prompt.prompt_description}</p>
-              <p>{prompt.prompt_requirements}</p>
-              <p>{prompt.prompt_links}</p>
-              <p>{prompt.categories_id}</p>
-              <p>{prompt.user_id}</p>
+                <p>Description: {prompt.prompt_description}</p>
+                <p>Requirements: {prompt.prompt_requirements}</p>
+                <p>Categories: {prompt.category_name}</p>
+                <p>Author: {prompt.user_nickname}</p>
+              </div>
+              <p>
+                Check all the prompts <a href="/">here.</a>
+              </p>
             </div>
           )}
         </section>

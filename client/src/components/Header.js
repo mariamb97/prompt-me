@@ -21,7 +21,7 @@ export default function Header() {
             <Link to="/add">ADD</Link>
           </li>
           <li>
-            <Link to="/category">CATEGORIES</Link>
+            <Link to="/categories">CATEGORIES</Link>
           </li>
         </ul>
       </nav>

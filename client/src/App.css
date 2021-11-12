@@ -98,7 +98,7 @@ label {
     padding: 5px 0px;
 }
 
-input {
+input, select {
     box-shadow: 1px 1px 1px rgb(52, 54, 63);
     width: 90%;
     height: 30px;
@@ -106,12 +106,12 @@ input {
     border-color: rgb(52, 54, 63);
 }
 
-#description {
+.textarea {
     flex-basis: 100%;
     
 }
 
-#description textarea {
+.textarea textarea {
     width: 100%;
     box-shadow: 1px 1px 1px rgb(52, 54, 63);
     border-color: rgb(52, 54, 63);
@@ -158,6 +158,14 @@ form button {
 #user_login form {
     justify-content: center;
 }
+
+#categories_main {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
 
 
 

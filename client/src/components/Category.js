@@ -1,45 +1,32 @@
-import React, {useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import handleDelete from "./Home";
+import Prompt from "./Prompt";
 
 
 export default function Category() {
+  const { id } = useParams();
+  const [prompts, setPrompts] = useState([]);
 
-  let [ categories, setCategories ] = useState( [] );
-  let [ error, setError ] = useState( null );
+  useEffect(() => {
+    getData();
+  }, [id]);
 
-  useEffect( () => {
-    getCategories();
-  }, [] );
+  const getData = async () => {
+    console.log(id);
+    const response = await fetch(`/categories/${id}/prompts`);
+    const prompts = await response.json();
+    setPrompts( prompts );
+  };
 
-  const getCategories = async () => {
-    try {
-      const res = await fetch( "/categories", {} );
-      const categories = await res.json();
-      setCategories( categories );
-      console.log( categories );
-
-    } catch ( err ) {
-      console.log( err );
-      setError( error );
-    }
-  }
-
-    return (
-      <section id="categories">
-        <h1>Category View</h1>
-        <div>
-          <Link to="/category/add">Add Category</Link>
-        </div>
-        <section>
-          <ul>
-            {categories &&
-              categories.map((category, i) => (
-                <li key={i}>
-                  <a href={`./`+(category.category_name).toLowerCase()}>{category.category_name}</a>
-                </li>
-              ))}
-          </ul>
-        </section>
+  return (
+    <section>
+      <h1>{ prompts[0].prompt_description}</h1>
+      <section>
+        {prompts.map((prompt, index) => (
+          <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
+        ))}
       </section>
-    );
+    </section>
+  );
 }
