@@ -44,7 +44,7 @@ yarn start
 
 | URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT |
 |-----|--------|-------------|----------------|-----------------|
-| /   | GET    | Get all prompts | n/a | "Array\ Object\prompt_id: NUMBER\prompt_description: STRING\prompt_requirements: STRING\prompt_categories: STRING\user_id: NUMBER" |
+| /   | GET    | Get all prompts | n/a | "Array  Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" |
 | / | POST | Post a new prompt |   "Object
    prompt_description: STRING
    prompt_requirements: STRING
