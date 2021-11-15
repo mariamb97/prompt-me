@@ -44,18 +44,18 @@ yarn start
 
 | URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT | DONE |
 |-----|--------|-------------|----------------|-----------------|------------|
-| /   | GET    | Get prompts. | n/a | Array  Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" | y |
-| /:id   | GET    | Get a prompt. | n/a | Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" | y |
-| / | POST | Post prompt. |   Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER" | n/a | y | 
-| /:id | DELETE | Delete prompt. | n/a | n/a | y |
-| /categories | GET | Get categories. | n/a | Array  Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
-| /categories/:id | GET | Get category. | n/a | update | y |
-| /categories/:id/prompts | GET | Get category's prompts. | n/a | update | y |
-| /categories | POST | Post category. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
-| /categories/:id | DELETE | Delete category. | n/a | n/a| y |
-| /users:id | GET | Get user. | n/a | update | y |
-| /users | POST | Post a new user. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
-| /users/:id | DELETE | Delete user. | n/a | n/a | y |
+| /   | GET    | Get prompts. | n/a | Array  Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" |
+| /:id   | GET    | Get a prompt. | n/a | Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" |
+| / | POST | Post prompt. |   Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER" | n/a |
+| /:id | DELETE | Delete prompt. | n/a | n/a |
+| /categories | GET | Get categories. | n/a | Array  Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a |
+| /categories/:id | GET | Get category. | n/a | update |
+| /categories/:id/prompts | GET | Get category's prompts. | n/a | update |
+| /categories | POST | Post category. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a |
+| /categories/:id | DELETE | Delete category. | n/a | n/a|
+| /users:id | GET | Get user. | n/a | update |
+| /users | POST | Post a new user. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a |
+| /users/:id | DELETE | Delete user. | n/a | n/a |
 
 
 
