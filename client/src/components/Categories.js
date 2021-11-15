@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
 
@@ -40,7 +40,7 @@ export default function Category() {
                   </li>
                 ))}
             </ul>
-            <Link to="/categories/add">Add Category</Link>
+            <Link className="categories__add" to="/categories/add">Add Category</Link>
           </section>
           <section className="categories__secondary">
             <Outlet />

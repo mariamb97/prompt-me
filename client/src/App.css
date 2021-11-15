@@ -1,3 +1,20 @@
+/* ----INDEX ----
+ 
+1. Variables & root
+2. Generic tags
+3. Layout
+4. Header & Navbar
+5. Lists
+6. Buttons
+7. Prompts
+8. Forms
+9. Categories
+10. Media queries
+
+-------- */
+
+/* ---- 1. Variables & Root --- */
+
 :root {
     --primary: gainsboro;
     --primary-sft: rgb(231, 239, 248);
@@ -20,7 +37,7 @@
     align-items: center;
 }
 
-/*----- TAGS -------- */
+/*----- 2. TAGS -------- */
 
 img {
     width: 100%;
@@ -41,7 +58,7 @@ a {
     color: var(--titles);
 }
 
-/*---- HEADER ----- */
+/*---- 3. LAYOUT ----- */
 
 #wrapper {
     display: flex;
@@ -55,11 +72,10 @@ header {
     flex-basis: 20%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     background-color: var(--secondary);
     padding: 20px;
-    font-weight: bold;
-    
+    font-weight: bold; 
 }
 
 .main {
@@ -71,19 +87,28 @@ header {
 
 .secondary {
     flex-basis: 40%;
-
 }
 
-/* ------- NAVBAR ------- */
+/* ------- 4. NAVBAR ------- */
 
 nav > * {
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .logo {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     text-align: center;
     border: 0.5rem double var(--extra);
+}
+
+.logo h1 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.logo p {
+    font-size: 1rem;
+    margin-top: 5px;
 }
 
 .list a:hover {
@@ -92,15 +117,15 @@ nav > * {
 
 .avatar {
     padding: 15px;
-    text-align: center;
+    /* text-align: center; */
     border-top: 0.2rem solid var(--extra);
 }
 
 .avatar img {
-    width: 30%;
+    width: 20%;
 }
 
-/* ------- LISTS ---------- */
+/* ------- 5. LISTS ---------- */
 
 .filters_nav ul {
     display: flex;
@@ -108,7 +133,7 @@ nav > * {
     margin: 0;
 }
 
-/* ------ BUTTONS --------- */
+/* ------ 6. BUTTONS --------- */
 
 form button, .user__register button{
     margin: 20px auto;
@@ -125,13 +150,15 @@ form button, .user__register button{
     padding: 5px 10px;
     border-radius: 5px;
     background-color: transparent;
+    margin: 0 5px;
+
 }
 
 .prompts-footer__options button:hover {
     background-color: var(--secondary);
 }
 
-/* ------ PROMPTS -------- */
+/* ------ 7. PROMPTS -------- */
 
 .prompts {
     display: flex;
@@ -142,6 +169,7 @@ form button, .user__register button{
     margin: 10px 0;
     color: rgb(78, 78, 78);
     background-color: var(--ternary);
+    box-shadow: 2px 2px 5px gainsboro;
 }
 
 .prompts__main {
@@ -169,7 +197,7 @@ form button, .user__register button{
 }
 
 .prompts-footer__author {
-    flex-basis: 20%;
+    flex-basis: 40%;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
@@ -182,7 +210,7 @@ form button, .user__register button{
 }
 
 .prompts-footer__options {
-    flex-basis: 40%;
+    flex-basis: 30%;
     display: flex;
     justify-content: space-evenly;
 }
@@ -197,7 +225,7 @@ form button, .user__register button{
 
 
 
-/* --------- FORMS --------- */
+/* --------- 8. FORMS --------- */
 
 form {
     display: flex;
@@ -274,7 +302,7 @@ input, select {
     display: block;
 }
 
-/* ------ CATEGORIES ------ */
+/* ------ 9. CATEGORIES ------ */
 #categories__main {
     display: flex;
     justify-content: space-between;
@@ -284,14 +312,24 @@ input, select {
     border-right: 1px solid grey;
     padding: 5%;
 }
+
+.categories__nav ul {
+    margin-bottom: 30px;
+}
+
 .categories__secondary {
     flex-basis: 70%;
+}
+
+.categories__add {
+    border-top: 1px gainsboro solid;
+    padding-top: 10px;
 }
 
 
 
 
-
+/*---- 10. MEDIA QUERIES ----*/
 
 @media (max-width: 665px) {
     header, #home {

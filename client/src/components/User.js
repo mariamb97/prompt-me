@@ -30,7 +30,7 @@ export default function User() {
     }
   }
 
-  // FAILED ATTEMPT AT DELETING USERS
+  // FAILED ATTEMPT AT DELETING USERS - LINKED TABLES GIVE TROUBLE TO DELETE
 
   // const handleDelete = (id) => {
   //   console.log( id );

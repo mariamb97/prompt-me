@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -11,29 +11,17 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Category from "./components/Category";
 
-
 function App() {
-  let [ categories, setCategories ] = useState( [] );
   return (
     <div id="wrapper">
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home />
-            }
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<AddUser />} />
           <Route path="/add" element={<AddPrompt />} />
           <Route path="profile" element={<User />} />
-          <Route
-            path="/categories"
-            element={
-              <Categories/>
-            }
-          >
+          <Route path="/categories" element={<Categories />}>
             <Route path="add" element={<AddCategory />} />
             <Route path=":id" element={<Category />} />
           </Route>

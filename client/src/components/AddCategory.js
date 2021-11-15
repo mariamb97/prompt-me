@@ -1,21 +1,27 @@
-import React, {useState} from 'react';
+// This is the component for adding a category. It has a form with a post request to the database, and a section to display the returned data.
+
+import React, { useState } from 'react';
 
 export default function AddCategory() {
+  // These are all the use states.
   let [ alert, setAlert ] = useState( null );
   let [ category, setCategory ] = useState( null );
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
   let [ userId, setUserId ] = useState( "" );
 
+  // These functions handle the input changes.
   const handleChangeName = e => setName( e.target.value );
   const handleChangeUserId = (e) => setUserId(e.target.value);
-  const handleChangeDescription = (e) => setDescription(e.target.value);
-
+  const handleChangeDescription = ( e ) => setDescription( e.target.value );
+  
+  // This function handles the submit. It prevents the event and calls the function that calls the database.
   const handleSubmit = ( e ) => {
     e.preventDefault();
     addCategory();
   }
 
+  // This function calls the database and displays
   const addCategory = async () => {
     if ( name && description && userId ) {
       try {
@@ -37,8 +43,8 @@ export default function AddCategory() {
 
         const category = await res.json();
         setCategory( category[0] );
-        console.log( "category: " + JSON.stringify(category) );
-        setAlert("Category added succesfully.")
+        console.log( "category: " + JSON.stringify( category ) );
+        if(category) return setAlert("Category added succesfully.")
 
       } catch ( err ) {
         console.log( err );
