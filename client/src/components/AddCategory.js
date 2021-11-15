@@ -52,40 +52,39 @@ export default function AddCategory() {
 
     return (
       <section>
-        <h1>Add New Category</h1>
-        <section>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <div>
-              <label htmlFor="input_name">Name</label>
-              <input
-                id="input_name"
-                name="input_name"
-                value={name}
-                onChange={(e) => handleChangeName(e)}
-              />
-            </div>
-            <div id="description">
-              <label htmlFor="input_description">Description</label>
-              <input
-                id="input_description"
-                name="input_description"
-                value={description}
-                onChange={(e) => handleChangeDescription(e)}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="input_userId">User Id</label>
-              <input
-                id="input_userId"
-                name="input_userId"
-                type="number"
-                value={userId}
-                onChange={(e) => handleChangeUserId(e)}
-              />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        </section>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <p>Add New Category</p>
+          <div>
+            <label htmlFor="input_name">Name</label>
+            <input
+              id="input_name"
+              name="input_name"
+              value={name}
+              onChange={(e) => handleChangeName(e)}
+            />
+          </div>
+          <div id="description">
+            <label htmlFor="input_description">Description</label>
+            <input
+              id="input_description"
+              name="input_description"
+              value={description}
+              onChange={(e) => handleChangeDescription(e)}
+            ></input>
+          </div>
+          <div>
+            <label htmlFor="input_userId">User Id</label>
+            <input
+              id="input_userId"
+              name="input_userId"
+              type="number"
+              value={userId}
+              onChange={(e) => handleChangeUserId(e)}
+            />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+
         <section>
           {alert && <p>{alert}</p>}
           {category && (

@@ -25,11 +25,11 @@ export default function Category() {
   }
 
     return (
-      <section id="categories">
+      <section className ="main" id="categories">
         <h1>Category View</h1>
         {alert && <p>{alert}</p>}
-        <div id="categories_main">
-          <section>
+        <div id="categories__main">
+          <section className="categories__nav">
             <ul>
               {categories &&
                 categories.map((category, i) => (
@@ -42,7 +42,7 @@ export default function Category() {
             </ul>
             <Link to="/categories/add">Add Category</Link>
           </section>
-          <section>
+          <section className="categories__secondary">
             <Outlet />
           </section>
         </div>

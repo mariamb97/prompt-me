@@ -74,7 +74,7 @@ export default function AddPrompt() {
     
 
     return (
-      <section id="addPrompt">
+      <section className="main" id="addPrompt">
         <h1>Add New Prompt</h1>
         <section>
           <form onSubmit={(e) => handleSubmit(e)}>

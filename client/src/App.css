@@ -1,6 +1,16 @@
+:root {
+    --primary: grey;
+    --primary-sft: rgb(231, 239, 248);
+    --secondary: lightsteelblue;
+    --ternary: rgb(244 249 255);
+    --titles: black;
+    --links: red;
+}
+
+
 #root {
-    max-width: 1000px;
-    width: 80%;
+    max-width: 1200px;
+    width: 95%;
     min-width: 50%;
     margin: 0 auto;
     display: flex;
@@ -9,42 +19,10 @@
     align-items: center;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid gainsboro;
-    margin-bottom: 30px;
-}
+/*----- TAGS -------- */
 
-#logo {
-    flex-basis: 20%;
-}
-
-#logo img {
-    max-width: 80%;
-    min-width: 75%;
-}
-
-nav {
-    flex-basis: 70%;
-    margin: 0 10px;
-
-}
-
-#avatar {
-    flex-basis: 10%;
-}
-
-#avatar img {
-    width: 40%;
-}
-
-nav ul {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding: 0 15px;
+img {
+    width: 100%;
 }
 
 ul {
@@ -57,41 +35,163 @@ li {
     padding: 5px 5px;
 }
 
-nav li {
-    text-align: center;
-
-}
-
-nav a {
+a {
     text-decoration: none;
+    color: var(--titles);
 }
 
-nav a:hover {
-    color: red;
+/*---- HEADER ----- */
+
+#wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 100vh;
+    width: inherit;
 }
 
-#home article {
+header {
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--secondary);
+    padding: 20px;
+    font-weight: bold;
+    
+}
+
+.main {
+    flex-basis: 70%;
+    padding: 20px;
+    background-color: var(--primary-sft);
+    box-shadow: 5px 5px 5px gainsboro;
+}
+
+.secondary {
+    flex-basis: 40%;
+
+}
+
+
+
+/* ------- NAVBAR ------- */
+
+nav > * {
+    margin: 10px 0;
+}
+
+.logo {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+    border: 1px dashed var(--primary);
+}
+
+.list a:hover {
+    color: var(--links);
+}
+
+.avatar {
+    border: 1px dashed var(--primary);
+    padding: 15px;
+    text-align: center;
+}
+
+.avatar img {
+    width: 30%;
+}
+
+/* ------- LISTS ---------- */
+
+.filters_nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+/* ------ BUTTONS --------- */
+
+form button, .user__register button{
+    margin: 20px auto;
+    padding: 5px 20px;
+    background-color: transparent;
+}
+
+.filters_nav button {
+    border-radius: 30px;
+    padding:  15px 20px;
+}
+
+/* ------ PROMPTS -------- */
+
+.prompts {
+    display: flex;
+    flex-direction: column;
     padding: 15px;
     border: 1px solid gainsboro;
+    border-radius: 20px;
     margin: 10px 0;
     color: rgb(78, 78, 78);
+    background-color: var(--ternary);
 }
 
+.prompts__main {
+    flex-basis: 80%;
+}
+
+
+.prompts__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border-top: 1px gainsboro solid;
+}
+
+.prompts-footer__author {
+    flex-basis: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+
+.prompts-footer__author img {
+    margin: 0 5px;
+    max-width: 30px;
+}
+
+.prompts-footer__options {
+    flex-basis: 35%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.prompts-footer__options img {
+    width: 15px;
+}
+
+
+
+/* --------- FORMS --------- */
+
 form {
-    margin: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;  
     max-width: 600px;
-    margin: 0 auto;
+    margin: 30px auto;
+    background-color: var(--ternary);
+    padding: 30px;
 }
 
 form div {
     flex-basis: 50%;
-        margin: 10px 0px;
+    margin: 10px 0px;
 
 }
+
 
 label {
     display: block;
@@ -108,7 +208,6 @@ input, select {
 
 .textarea {
     flex-basis: 100%;
-    
 }
 
 .textarea textarea {
@@ -116,30 +215,11 @@ input, select {
     box-shadow: 1px 1px 1px rgb(52, 54, 63);
     border-color: rgb(52, 54, 63);
     box-sizing: border-box;
-
 }
 
-form button {
-    margin: 20px auto;
-    width: 20%;
-    padding: 5px;
-    background-color: transparent;
-}
-
-#categories_nav {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-}
-
-#categories_nav ul {
-    display: flex;
-    margin: 0;
-}
-
-#categories_nav button {
-    padding: 5px 20px;
+/*--- Forms categories ----*/
+.categories__secondary form {
+    display: block;
 }
 
 #user_actions {
@@ -148,21 +228,62 @@ form button {
     align-content: center;
 }
 
-#user_actions > article {
+/* --- Forms login and register --*/
+.user__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+
+}
+.user__wrap > article {
     flex-basis: 40%;
-    border: 1px solid gainsboro;
-    padding: 20px;
+    padding: 10px;
+    margin: 10px;
     text-align: center;
+    border: 1px solid gainsboro;
 }
 
-#user_login form {
+.user__login {
     justify-content: center;
+    display: block;
 }
 
-#categories_main {
+/* ------ CATEGORIES ------ */
+#categories__main {
     display: flex;
     justify-content: space-between;
 }
+
+.categories__nav {
+    border-right: 1px solid grey;
+    padding: 5%;
+}
+.categories__secondary {
+    flex-basis: 70%;
+}
+
+
+
+
+
+
+@media (max-width: 665px) {
+    header, #home {
+        flex-basis: 100%;
+    }
+    .avatar > a {
+        display: flex;
+    }
+
+    .avatar img {
+        width: 15%;
+    }
+
+ }
+
+
 
 
 

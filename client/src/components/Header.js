@@ -7,13 +7,16 @@ import "../App.css";
 export default function Header() {
   return (
     <header>
-      <div id="logo">
-        <a href="/">
-          <img src={Logo} alt="logo"></img>
-        </a>
-      </div>
       <nav>
-        <ul>
+        <div className="logo">
+          <a href="/">
+            {/* <img src={Logo} alt="logo"></img> */}
+
+            <h1>Prompt me</h1>
+            <p>Fiction Ideas Repository</p>
+          </a>
+        </div>
+        <ul className="list">
           <li>
             <Link to="/">HOME</Link>
           </li>
@@ -25,10 +28,14 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <div id="avatar">
+      <div className="avatar">
         <Link to="/profile">
-          <img src={User} alt="user avatar"></img>
+          <img src={User} alt="user avatar"></img><p>My profile</p>
         </Link>
       </div>
     </header>
-  );}
+  );
+}
+  
+
+

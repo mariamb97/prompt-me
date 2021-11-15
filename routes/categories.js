@@ -41,6 +41,25 @@ router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
       //   INNER JOIN categories ON prompts.category_id = categories.category_id
       // ;
 
+
+
+// GET the prompts of A CATEGORY
+// /categories/id/prompts
+
+router.get("/:id/prompts", async function (req, res) {
+  try {
+    const { id } = req.params
+    // const id = req.params.id
+    console.log(`SELECT * FROM prompts WHERE category_id = ${id};`);
+    const results = await db(`SELECT * FROM prompts WHERE category_id = ${id};`);
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+} );
+
+
+
 // INSERT a new category into the DB
 router.post("/", async function (req, res) {
   try {

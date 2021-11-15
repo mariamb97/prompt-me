@@ -83,9 +83,10 @@ export default function Home() {
   }
 
   return (
-    <section id="home">
-      <h1>Take your prompt!</h1>
-      <div id="categories_nav">
+    <section className="main" id="home">
+      <h3>Take your prompt!</h3>
+      <p>Popular categories:</p>
+      <div className="filters_nav">
         <ul>
           <li>
             <button onClick={() => handleFilterAll()}>All</button>
@@ -101,9 +102,6 @@ export default function Home() {
                 </li>
               ))}
         </ul>
-        <div>
-          <Link to="/add">Add</Link>
-        </div>
       </div>
       {error && <p>error</p>}
       {filter &&

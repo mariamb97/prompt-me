@@ -54,13 +54,13 @@ export default function User() {
   // };
 
   return (
-    <section id="user">
+    <section className="main" id="user">
       <h1>User section</h1>
-      <section id="user_actions">
+      <section className="user__wrap">
         <article>
           <h3>Log In</h3>
-          <div id="user_login">
-            <form onSubmit={(e) => handleSubmit(e)}>
+          <div>
+            <form className="user__login" onSubmit={(e) => handleSubmit(e)}>
               <label htmlFor="user_id">User ID</label>
               <input
                 id="user_id"
@@ -72,11 +72,11 @@ export default function User() {
             </form>
           </div>
         </article>
-        <article>
+        <article className="user__register">
+          
           <h3>Sign Up</h3>
-          <div>
-            <Link to="/register">Register</Link>
-          </div>
+            <button><Link to="/register">Click to register</Link></button>
+            
         </article>
       </section>
       {alert && <p>{alert}</p>}

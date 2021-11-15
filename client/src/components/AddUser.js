@@ -56,7 +56,7 @@ export default function AddUser() {
   };
 
     return (
-      <section id="registration">
+      <section className="main" id="registration">
         <h1>Add New User</h1>
         <section>
           <form onSubmit={(e) => handleSubmit(e)}>
