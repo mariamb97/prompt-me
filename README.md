@@ -42,21 +42,19 @@ yarn start
 ## API routes draft
 ![API routes draft](img/api_routes_draft.png)
 
-| URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT | INTEGRATED |
+| URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT | DONE |
 |-----|--------|-------------|----------------|-----------------|------------|
 | /   | GET    | Get all prompts | n/a | Array  Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" | y |
-| / | POST | Post a new prompt |   Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER" | n/a | y | 
-| / | PUT | Edit an existing prompt. | Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER | n/a | y |
-| /:id | DELETE | To delete prompts by ID | n/a | n/a | y |
-| /categories | POST | Post new categories. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
-|
-|
-|
-|
-|
-|
-|
-|
+| / | POST | Post a prompt. |   Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER" | n/a | y | 
+| /:id | DELETE | Delete a prompt. | n/a | n/a | y |
+| /categories | POST | Post category. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
+| /categories/:id | DELETE | Delete category. | n/a | n/a| y |
+| /categories/:id/prompts | GET | Get a categorie's prompts. | n/a | update | y |
+| /categories/:id | PUT | Edit category. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
+| /users | POST | Post a new user. | Object  category_name: STRING  category_description: STRING  user_id: NUMBER | n/a | y |
+| /users/:id | DELETE | Delete user. | n/a | n/a | y |
+| /users:id | GET | Get user. | n/a | update | y |
+| /users/:id/prompts | GET | Get prompts of category. | n/a | Array | y |
 |
 |
 |

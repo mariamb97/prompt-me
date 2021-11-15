@@ -4,7 +4,7 @@ const db = require( "../model/helper" );
 const userMustExist = require("../guards/userMustExist");
 
 
-// GET users listing. 
+// GET users. 
 router.get("/", async function (req, res) {
   try {
     const results = await db("SELECT * FROM users;");
@@ -14,7 +14,7 @@ router.get("/", async function (req, res) {
   }
 } );
 
-// GET a user
+// GET a user.
 router.get( "/:user_id", userMustExist, async function ( req, res ) {
   res.send(req.user);
   
@@ -26,7 +26,7 @@ router.get( "/:user_id", userMustExist, async function ( req, res ) {
   // }
 });
 
-// INSERT a new user into the DB
+// INSERT user.
 router.post("/", async function (req, res) {
   try {
     await db(
@@ -40,7 +40,7 @@ router.post("/", async function (req, res) {
   }
 });
 
-// DELETE a user from the DB
+// DELETE a user.
 router.delete("/:user_id", userMustExist, async function (req, res) {
   try {
     await db(`DELETE FROM users WHERE user_id= ${req.params.user_id};`);

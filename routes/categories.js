@@ -4,7 +4,7 @@ const db = require( "../model/helper" );
 const categoryMustExist = require("../guards/categoryMustExist");
 
 
-// GET categories listing. 
+// GET categories. 
 router.get( '/', async function ( req, res) {
   try {
     const results = await db( "SELECT * FROM categories;" );
@@ -16,7 +16,7 @@ router.get( '/', async function ( req, res) {
 } );
 
 
-// GET a category
+// GET a category.
 router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
   res.send(req.category);
     
@@ -31,8 +31,6 @@ router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
   
   
 } );
-
-
 
       // SELECT 
       //   prompts.prompt_description, 

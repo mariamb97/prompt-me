@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require( "../model/helper" );
 const promptMustExist = require("../guards/promptMustExist");
 
-/* GET home page. */
+/* GET prompts. */
 router.get( '/', async function ( req, res) {
   try {
     const results = await db(
@@ -30,7 +30,7 @@ router.get( '/', async function ( req, res) {
   }
 } );
 
-// GET a prompt from the DB
+// GET a prompt.
 router.get("/:prompt_id", promptMustExist, async function (req, res) {
   res.send( req.prompt );
   
@@ -80,6 +80,7 @@ INNER JOIN categories
     res.status(500).send(err);
   }
 } );
+
 
 // DELETE a prompt from the DB
 router.delete("/:prompt_id", promptMustExist, async function(req, res) {
