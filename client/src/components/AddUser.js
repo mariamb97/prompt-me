@@ -80,7 +80,7 @@ export default function AddUser() {
             </div>
 
             <div>
-              <label htmlFor="input_lastname">Surnames</label>
+              <label htmlFor="input_lastname">Email</label>
               <input
                 id="input_lastname"
                 name="input_lastname"
@@ -116,7 +116,8 @@ export default function AddUser() {
               <div>
                 <p>UserID: {user.user_id}</p>
                 <p>Username: { user.user_nickname }</p>
-                
+                <p>Name: {user.user_firstname}</p>
+                <p>Email: {user.user_lastname}</p>
                 <p>Password: {user.user_password}</p>
               </div>
             </div>

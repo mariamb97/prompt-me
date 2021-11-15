@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Prompt from "./Prompt";
 
 
-export default function Home( { categoriesCB } ) {
+export default function Home( ) {
   let [prompts, setPrompts] = useState([]);
   let [categories, setCategories] = useState([]);
   let [error, setError] = useState(null);
@@ -32,7 +32,6 @@ export default function Home( { categoriesCB } ) {
       const res = await fetch("/categories", {});
       const categories = await res.json();
       setCategories( categories );
-      categoriesCB( categories );
     } catch (err) {
       console.log(err);
       setError(error);
@@ -63,7 +62,6 @@ export default function Home( { categoriesCB } ) {
   };
 
   const deletePrompt = async (id) => {
-    console.log("hola", id);
     try {
       const res = await fetch(`/prompts/${id}`, {
         method: "DELETE",

@@ -2,34 +2,27 @@ import React, {useState, useEffect } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
 
-export default function Category(props) {
+export default function Category() {
 
   let [ categories, setCategories ] = useState( [] );
   let [alert, setAlert] = useState(null);
 
   useEffect( () => {
-    // getCategories();
-    setCategories(props.categories)
-    // props.categoriesCB(props);
-    console.log("props: ",props)
+    getCategories();
   }, [] );
 
+  const getCategories = async () => {
+    try {
+      const res = await fetch( "/categories", {} );
+      const categories = await res.json();
+      setCategories( categories );
+      console.log( categories );
 
-  // THE CATEGORIES CAN BE TAKEN FROM THE HOME - SIBLINGS
-
-
-  // const getCategories = async () => {
-  //   try {
-  //     const res = await fetch( "/categories", {} );
-  //     const categories = await res.json();
-  //     setCategories( categories );
-  //     console.log( categories );
-
-  //   } catch ( err ) {
-  //     console.log( err );
-  //     setAlert( err );
-  //   }
-  // }
+    } catch ( err ) {
+      console.log( err );
+      setAlert( err );
+    }
+  }
 
     return (
       <section className ="main" id="categories">

@@ -28,7 +28,11 @@ router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
 //   } catch (err) {
 //     res.status(500).send(err);
 //   }
+  
+  
 } );
+
+
 
       // SELECT 
       //   prompts.prompt_description, 
@@ -40,6 +44,8 @@ router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
       //   INNER JOIN users ON prompts.user_id = users.user_id
       //   INNER JOIN categories ON prompts.category_id = categories.category_id
       // ;
+
+      // ALTER TABLE props MODIFY props_description datatype NOT NULL
 
 
 

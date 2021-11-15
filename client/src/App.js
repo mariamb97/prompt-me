@@ -22,7 +22,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Home categoriesCB={(list) => setCategories(list)} />
+              <Home />
             }
           />
           <Route path="/register" element={<AddUser />} />
@@ -31,9 +31,7 @@ function App() {
           <Route
             path="/categories"
             element={
-              <Categories
-                categories={categories}
-              />
+              <Categories/>
             }
           >
             <Route path="add" element={<AddCategory />} />

@@ -1,9 +1,10 @@
 :root {
-    --primary: grey;
+    --primary: gainsboro;
     --primary-sft: rgb(231, 239, 248);
     --secondary: lightsteelblue;
     --ternary: rgb(244 249 255);
-    --titles: black;
+    --extra: rgb(114, 142, 179);
+    --titles: rgb(37, 54, 77);
     --links: red;
 }
 
@@ -73,8 +74,6 @@ header {
 
 }
 
-
-
 /* ------- NAVBAR ------- */
 
 nav > * {
@@ -84,7 +83,7 @@ nav > * {
 .logo {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     text-align: center;
-    border: 1px dashed var(--primary);
+    border: 0.5rem double var(--extra);
 }
 
 .list a:hover {
@@ -92,9 +91,9 @@ nav > * {
 }
 
 .avatar {
-    border: 1px dashed var(--primary);
     padding: 15px;
     text-align: center;
+    border-top: 0.2rem solid var(--extra);
 }
 
 .avatar img {
@@ -122,6 +121,16 @@ form button, .user__register button{
     padding:  15px 20px;
 }
 
+.prompts-footer__options button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.prompts-footer__options button:hover {
+    background-color: var(--secondary);
+}
+
 /* ------ PROMPTS -------- */
 
 .prompts {
@@ -143,6 +152,11 @@ form button, .user__register button{
 
 .prompts__description {
     color: black;
+    line-height: 1.5rem;
+}
+
+.prompts__categories {
+    font-family: 'Roboto', sans-serif;;
 }
 
 
@@ -168,13 +182,17 @@ form button, .user__register button{
 }
 
 .prompts-footer__options {
-    flex-basis: 35%;
+    flex-basis: 40%;
     display: flex;
     justify-content: space-evenly;
 }
 
 .prompts-footer__options img {
     width: 15px;
+}
+
+.favourite {
+    background-color: red;
 }
 
 
