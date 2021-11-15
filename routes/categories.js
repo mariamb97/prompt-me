@@ -64,7 +64,7 @@ router.get("/:id/prompts", async function (req, res) {
   }
 } );
 
-// INSERT category
+// POST category
 router.post("/", async function (req, res) {
   try {
     await db(
