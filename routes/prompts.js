@@ -30,6 +30,7 @@ router.get( '/', async function ( req, res) {
   }
 } );
 
+
 // GET a prompt.
 router.get("/:prompt_id", promptMustExist, async function (req, res) {
   res.send( req.prompt );
@@ -45,7 +46,7 @@ router.get("/:prompt_id", promptMustExist, async function (req, res) {
 
 });
 
-// POST a new prompt into the DB
+// POST prompt.
 router.post("/", async function(req, res) {
   try {
     await db(
@@ -82,7 +83,7 @@ INNER JOIN categories
 } );
 
 
-// DELETE a prompt from the DB
+// DELETE prompt.
 router.delete("/:prompt_id", promptMustExist, async function(req, res) {
   try {
     await db(`DELETE FROM prompts WHERE prompt_id=${req.params.prompt_id};`);

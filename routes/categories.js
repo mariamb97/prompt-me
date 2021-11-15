@@ -16,7 +16,7 @@ router.get( '/', async function ( req, res) {
 } );
 
 
-// GET a category.
+// GET category.
 router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
   res.send(req.category);
     
@@ -64,7 +64,7 @@ router.get("/:id/prompts", async function (req, res) {
   }
 } );
 
-// INSERT a new category into the DB
+// INSERT category
 router.post("/", async function (req, res) {
   try {
     await db(
