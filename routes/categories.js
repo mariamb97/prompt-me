@@ -51,14 +51,14 @@ router.get("/:id/prompts", async function (req, res) {
     const { id } = req.params
     // const id = req.params.id
     console.log(`SELECT * FROM prompts WHERE category_id = ${id};`);
-    const results = await db(`SELECT * FROM prompts WHERE category_id = ${id};`);
+    const results = await db(
+      `SELECT prompts.prompt_id, prompts.prompt_description, prompts.prompt_requirements, prompts.prompt_links, prompts.category_id, users.user_nickname, categories.category_name FROM prompts INNER JOIN users ON prompts.user_id = users.user_id INNER JOIN categories ON prompts.category_id = categories.category_id WHERE prompts.category_id = ${id};`
+    );
     res.send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
 } );
-
-
 
 // INSERT a new category into the DB
 router.post("/", async function (req, res) {

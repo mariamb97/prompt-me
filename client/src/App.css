@@ -137,6 +137,12 @@ form button, .user__register button{
 
 .prompts__main {
     flex-basis: 80%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+
+}
+
+.prompts__description {
+    color: black;
 }
 
 

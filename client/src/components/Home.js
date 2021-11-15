@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import Prompt from "./Prompt";
 
 
-export default function Home() {
-  let [ prompts, setPrompts ] = useState( [] );
+export default function Home( { categoriesCB } ) {
+  let [prompts, setPrompts] = useState([]);
   let [categories, setCategories] = useState([]);
-  let [ error, setError ] = useState( null );
-  let [ filter, setFilter ] = useState( [] );
+  let [error, setError] = useState(null);
+  let [filter, setFilter] = useState([]);
 
   useEffect(() => {
     getPrompts();
@@ -18,8 +18,8 @@ export default function Home() {
     try {
       const res = await fetch("/prompts", {});
       const prompts = await res.json();
-      setPrompts( prompts );
-      setFilter( prompts );
+      setPrompts(prompts);
+      setFilter(prompts);
       console.log(prompts);
     } catch (err) {
       console.log(err);
@@ -28,59 +28,59 @@ export default function Home() {
   };
 
   const getCategories = async () => {
-      try {
-        const res = await fetch("/categories", {});
-        const categories = await res.json();
-        setCategories(categories);
-      } catch (err) {
-        console.log(err);
-        setError(error);
-      }
-    };
-  
-  const handleFilter = ( category ) => {
+    try {
+      const res = await fetch("/categories", {});
+      const categories = await res.json();
+      setCategories( categories );
+      categoriesCB( categories );
+    } catch (err) {
+      console.log(err);
+      setError(error);
+    }
+  };
+
+  const handleFilter = (category) => {
     setError(null);
     setFilter(prompts);
     addFilter(category);
-  }
+  };
 
   const handleFilterAll = () => {
     setError(null);
-    setFilter( prompts );
-  }
+    setFilter(prompts);
+  };
 
-  const handleDelete = ( element ) => {
+  const handleDelete = (element) => {
     setError(null);
-    deletePrompt( element.prompt_id );
-  }
+    deletePrompt(element.prompt_id);
+  };
 
-  const addFilter = ( category ) => {
+  const addFilter = (category) => {
     const filter = prompts.filter(
       (prompt) => prompt.category_id === category.category_id
     );
-    setFilter(filter); 
-  }
+    setFilter(filter);
+  };
 
-  const deletePrompt = async ( id ) => {
-    console.log( "hola", id )
+  const deletePrompt = async (id) => {
+    console.log("hola", id);
     try {
       const res = await fetch(`/prompts/${id}`, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-      } );
+      });
 
       const prompts = await res.json();
 
       setPrompts(prompts);
-      setFilter( prompts );
-      
-    } catch ( err ) {
-      console.log( err );
-      setError(err)
+      setFilter(prompts);
+    } catch (err) {
+      console.log(err);
+      setError(err);
     }
-  }
+  };
 
   return (
     <section className="main" id="home">

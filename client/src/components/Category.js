@@ -20,13 +20,13 @@ export default function Category() {
   };
 
   return (
-   
-      <section>
-      <h1>{ prompts[0].prompt_description}</h1>
-        {prompts.map((prompt, index) => (
-          <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
-        ))}
-      </section>
-   
+    <section>
+      {prompts.length > 0 &&
+        <h1>{ prompts[ 0 ].category_name }</h1> }
+
+      {prompts.map((prompt, index) => (
+        <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
+      ))}
+    </section>
   );
 }

@@ -89,11 +89,13 @@ export default function AddUser() {
               />
             </div>
 
+            
             <div>
               <label htmlFor="input_password">Password</label>
               <input
                 id="input_password"
                 name="input_password"
+                type="password"
                 value={password}
                 onChange={(e) => handleChangePassword(e)}
               />
@@ -113,7 +115,8 @@ export default function AddUser() {
               </p>
               <div>
                 <p>UserID: {user.user_id}</p>
-                <p>Username: {user.user_nickname}</p>
+                <p>Username: { user.user_nickname }</p>
+                
                 <p>Password: {user.user_password}</p>
               </div>
             </div>
