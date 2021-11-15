@@ -42,8 +42,8 @@ yarn start
 ## API routes draft
 ![API routes draft](img/api_routes_draft.png)
 
-| URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT | DONE |
-|-----|--------|-------------|----------------|-----------------|------------|
+| URL | METHOD | DESCRIPTION | REQUEST OBJECT | RESPONSE OBJECT |
+|-----|--------|-------------|----------------|-----------------|
 | /   | GET    | Get prompts. | n/a | Array  Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" |
 | /:id   | GET    | Get a prompt. | n/a | Object  prompt_id: NUMBER  prompt_description: STRING prompt_requirements: STRING  prompt_categories: STRING  user_id: NUMBER" |
 | / | POST | Post prompt. |   Object  prompt_description: STRING  prompt_requirements: STRING  prompt_links: STRING  category_id: NUMBER  user_id: NUMBER" | n/a |
