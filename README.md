@@ -7,50 +7,34 @@ A repository of ideas to write fictional stories.
 - The main idea is that users can input ideas they would like to be transformed into fictional stories or art.
 - Writers and artists can take inspiration from these ideas, and then link their creations in each prompt (fork).
 
-
-## Why you made it?
-I am a potential user who was looking for something like this and didn't find one.
-
-## What technologies you used to build it?
-React, Router, MySql. No third party API.
-
-## What were the major steps taken to build it?
-Endpoints in the backend, routing, components in the frontend and styling.
+## Technologies used
+React, Router, MySql. No third party API, data is exclusively taken from the user's input.
 
 ## Future features
-- Fork functionality.
-- Favourites functionality.
+- Fork functionality. The user needs to be able to use a prompt to write, this would require to add a state system to the prompts that is associated to the user id, so they can become "work in progress" or "complete", etc. And finally, being able to add the external links to their work.
+- Favourites functionality. It will require to associate the id user to the prompt id.
 - Login authentication.
-- Prompt single page.
+- Prompt single page. Each prompt will need to have a page where further info (like number of favourites, links, etc are shown).
 
-## What was most challenging?
-Deciding that it's good enough as MVP.
+## Setup
 
-## What you feel most proud of?
-The main functionalities work.
+### Dependencies
 
-## INSTRUCTIONS
-### Backend
-In the project folder run:
+- Run `npm install` in project directory. This will install server-related dependencies such as `express`.
+- `cd client` and run `npm install`. This will install client dependencies (React).
 
-```
-yarn
-```
-then
+### Database Prep
 
-```
-yarn start
-```
-### Frontend
+- Access the MySQL interface in your terminal by running `mysql -u root -p`
 
-```
-cd client
-```
-then
-```
-yarn start
-```
+- Run `npm run migrate`  or `yarn` in the project folder of this repository.
 
+- Run `npm run migrate`  or `yarn` in the client folder of this repository.
+
+### Development
+
+- Run `npm start` in project directory to start the Express server on port 5000.
+- In another terminal, do `cd client` and run `npm start` to start the client in development mode with hot reloading in port 3000.
 
 ## Database tables draft
 
@@ -72,4 +56,10 @@ yarn start
 | /users:id | GET | Get user. | n/a | Object user_id: INTEGER user_email: VARCHAR(255) user_nickname:VARCHAR(255) user_firstname: VARCHAR(255) user_lastname: VARCHAR(255) user_password: VARCHAR(255) |
 | /users | POST | Post a new user. | Object  user_id: INTEGER user_email: VARCHAR(255) user_nickname:VARCHAR(255) user_firstname: VARCHAR(255) user_lastname: VARCHAR(255) user_password: VARCHAR(255) | Object  user_id: INTEGER user_email: VARCHAR(255) user_nickname:VARCHAR(255) user_firstname: VARCHAR(255) user_lastname: VARCHAR(255) user_password: VARCHAR(255) |
 | /users/:id | DELETE | Delete user. | n/a | n/a |
+
+
+
+
+
+
 
