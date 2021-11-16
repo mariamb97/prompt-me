@@ -18,8 +18,15 @@ export default function AddCategory() {
   // This function handles the submit. It prevents the event and calls the function that calls the database.
   const handleSubmit = ( e ) => {
     e.preventDefault();
+    console.log(JSON.stringify( {
+            category_name: name,
+            category_description: description,
+            user_id: userId
+          }))
     addCategory();
   }
+
+  
 
   // This function calls the database and displays
   const addCategory = async () => {

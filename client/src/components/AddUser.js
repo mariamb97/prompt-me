@@ -9,8 +9,11 @@ export default function AddUser() {
   let [ firstname, setFirstname ] = useState( "" );
   let [lastname, setLastname] = useState("");
   let [ password, setPassword ] = useState( "" );
+  let [ email, setEmail] = useState("");
 
-  const handleChangeNickname = (e) => setNickname( e.target.value );
+
+  const handleChangeNickname = ( e ) => setNickname( e.target.value );
+  const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangeFirstname = (e) => setFirstname(e.target.value);
   const handleChangeLastname = (e) => setLastname(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
@@ -18,26 +21,35 @@ export default function AddUser() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log( JSON.stringify( {
+      user_email: email,
+      user_nickname: nickname,
+      user_firstname: firstname,
+      user_lastname: lastname,
+      user_password: password
+    }))
     addUser();
   }
 
   const addUser = async () => {
-    if (nickname && firstname && lastname && password) {
+    if (nickname && email && firstname && lastname && password) {
       try {
         const res = await fetch("/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify( {
+          body: JSON.stringify({
+            user_email: email,
             user_nickname: nickname,
             user_firstname: firstname,
             user_lastname: lastname,
-            user_password: password,
-          }), 
-        });
-
-        setNickname("");
+            user_password: password
+          }),
+        } );
+        
+        setEmail("");
+        setNickname( "" );
         setFirstname( "" );
         setLastname("");
         setPassword( "" );
@@ -70,6 +82,15 @@ export default function AddUser() {
               />
             </div>
             <div>
+              <label htmlFor="input_email">Email</label>
+              <input
+                id="input_email"
+                name="input_email"
+                value={email}
+                onChange={(e) => handleChangeEmail(e)}
+              />
+            </div>
+            <div>
               <label htmlFor="input_firstname">Name</label>
               <input
                 id="input_firstname"
@@ -80,7 +101,7 @@ export default function AddUser() {
             </div>
 
             <div>
-              <label htmlFor="input_lastname">Email</label>
+              <label htmlFor="input_lastname">Surname</label>
               <input
                 id="input_lastname"
                 name="input_lastname"
@@ -89,7 +110,6 @@ export default function AddUser() {
               />
             </div>
 
-            
             <div>
               <label htmlFor="input_password">Password</label>
               <input
@@ -115,9 +135,10 @@ export default function AddUser() {
               </p>
               <div>
                 <p>UserID: {user.user_id}</p>
-                <p>Username: { user.user_nickname }</p>
+                <p>Username: {user.user_nickname}</p>
+                <p>Email: {user.user_email}</p>
                 <p>Name: {user.user_firstname}</p>
-                <p>Email: {user.user_lastname}</p>
+                <p>Surname: {user.user_lastname}</p>
                 <p>Password: {user.user_password}</p>
               </div>
             </div>
