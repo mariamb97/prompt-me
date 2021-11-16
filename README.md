@@ -10,12 +10,6 @@ A repository of ideas to write fictional stories.
 ## Technologies used
 React, Router, MySql. No third party API, data is exclusively taken from the user's input.
 
-## Future features
-- Fork functionality. The user needs to be able to use a prompt to write, this would require to add a state system to the prompts that is associated to the user id, so they can become "work in progress" or "complete", etc. And finally, being able to add the external links to their work.
-- Favourites functionality. It will require to associate the id user to the prompt id.
-- Login authentication.
-- Prompt single page. Each prompt will need to have a page where further info (like number of favourites, links, etc are shown).
-
 ## Setup
 
 ### Dependencies
@@ -57,6 +51,11 @@ React, Router, MySql. No third party API, data is exclusively taken from the use
 | /users | POST | Post a new user. | Object  user_id: INTEGER user_email: VARCHAR(255) user_nickname:VARCHAR(255) user_firstname: VARCHAR(255) user_lastname: VARCHAR(255) user_password: VARCHAR(255) | Object  user_id: INTEGER user_email: VARCHAR(255) user_nickname:VARCHAR(255) user_firstname: VARCHAR(255) user_lastname: VARCHAR(255) user_password: VARCHAR(255) |
 | /users/:id | DELETE | Delete user. | n/a | n/a |
 
+## Future features
+- Fork functionality. The user needs to be able to use a prompt to write, this would require to add a state system to the prompts that is associated to the user id, so they can become "work in progress" or "complete", etc. And finally, being able to add the external links to their work.
+- Favourites functionality. It will require to associate the id user to the prompt id.
+- Login authentication.
+- Prompt single page. Each prompt will need to have a page where further info (like number of favourites, links, etc are shown).
 
 
 
