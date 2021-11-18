@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Prompt from "./Prompt";
 
 
-export default function Home( ) {
+export default function Home() {
   let [prompts, setPrompts] = useState([]);
   let [categories, setCategories] = useState([]);
   let [error, setError] = useState(null);
@@ -19,9 +19,7 @@ export default function Home( ) {
       const prompts = await res.json();
       setPrompts(prompts);
       setFilter(prompts);
-      console.log(prompts);
     } catch (err) {
-      console.log(err);
       setError(error);
     }
   };
@@ -30,9 +28,8 @@ export default function Home( ) {
     try {
       const res = await fetch("/categories", {});
       const categories = await res.json();
-      setCategories( categories );
+      setCategories(categories);
     } catch (err) {
-      console.log(err);
       setError(error);
     }
   };
@@ -50,12 +47,12 @@ export default function Home( ) {
 
   const handleDelete = (element) => {
     setError(null);
-    deletePrompt(element.prompt_id);
+    deletePrompt(element.id);
   };
 
   const addFilter = (category) => {
     const filter = prompts.filter(
-      (prompt) => prompt.category_id === category.category_id
+      (prompt) => prompt.category_id === category.id
     );
     setFilter(filter);
   };
@@ -90,11 +87,12 @@ export default function Home( ) {
           </li>
           {categories &&
             categories
+              // ??
               .filter((category, i) => i < 5)
               .map((category, i) => (
                 <li key={i}>
                   <button onClick={() => handleFilter(category)}>
-                    {category.category_name}
+                    {category.name}
                   </button>
                 </li>
               ))}

@@ -1,10 +1,9 @@
 var express = require("express");
 var router = express.Router();
-const db = require( "../model/helper" );
+const db = require("../model/helper");
 const userMustExist = require("../guards/userMustExist");
 
 
-// GET users. 
 router.get("/", async function (req, res) {
   try {
     const results = await db("SELECT * FROM users;");
@@ -12,12 +11,11 @@ router.get("/", async function (req, res) {
   } catch (err) {
     res.status(500).send(err);
   }
-} );
+});
 
-// GET a user.
-router.get( "/:user_id", userMustExist, async function ( req, res ) {
+router.get("/:id", userMustExist, async function (req, res) {
   res.send(req.user);
-  
+
   // try {
   //   const results = await db(`SELECT * FROM users WHERE user_id= ${req.params.user_id};`);
   //   res.send(results.data);
@@ -26,15 +24,16 @@ router.get( "/:user_id", userMustExist, async function ( req, res ) {
   // }
 });
 
-// INSERT user.
+
 router.post("/", async function (req, res) {
+  const { nickname, email, firstname, lastname, password } = req.body
   try {
     await db(
-      `INSERT INTO users (user_email, user_nickname, user_firstname, user_lastname, user_password) VALUES ("${req.body.user_email}", "${req.body.user_nickname}", "${req.body.user_firstname}", "${req.body.user_lastname}","${req.body.user_password}" );`
+      `INSERT INTO users (nickname, email, firstname, lastname, password) VALUES ("${nickname}", "${email}", "${firstname}", "${lastname}","${password}" );`
     );
 
     const results = await db(
-      "SELECT * FROM users ORDER BY user_id DESC LIMIT 1;"
+      "SELECT * FROM users ORDER BY id DESC LIMIT 1;"
     );
     res.status(201).send(results.data);
   } catch (err) {
@@ -43,9 +42,10 @@ router.post("/", async function (req, res) {
 });
 
 // DELETE a user.
-router.delete("/:user_id", userMustExist, async function (req, res) {
+router.delete("/:id", userMustExist, async function (req, res) {
+  const { id } = req.params
   try {
-    await db(`DELETE FROM users WHERE user_id= ${req.params.user_id};`);
+    await db(`DELETE FROM users WHERE id= ${id};`);
     const results = await db("SELECT * FROM users;");
 
     res.send(results.data);

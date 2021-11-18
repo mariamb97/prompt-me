@@ -5,17 +5,22 @@ import User from "../img/user.svg";
 import "../App.css";
 
 export default function Header() {
+
+  const logOut = async () => {
+    localStorage.removeItem("token")
+  }
+
   return (
     <header>
       <nav>
-          <a href="/">
-            <div className="logo">
-              {/* <img src={Logo} alt="logo"></img> */}
+        <a href="/">
+          <div className="logo">
+            {/* <img src={Logo} alt="logo"></img> */}
 
-              <h1>Prompt me</h1>
-              <p>Fiction Ideas Repository</p>
-            </div>
-          </a>
+            <h1>Prompt me</h1>
+            <p>Fiction Ideas Repository</p>
+          </div>
+        </a>
         <ul className="list">
           <li>
             <Link to="/">HOME</Link>
@@ -28,14 +33,16 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-          <div className="avatar">
-            <Link to="/profile">
-                <img src={User} alt="user avatar"></img>
-            </Link>
-          </div>
+      <div className="avatar">
+        {/* <Link to="/authentication">
+          <img src={User} alt="user avatar"></img>
+        </Link> */}
+        <img src={User} alt="user avatar"></img>
+        <button onClick={logOut}>Log Out</button>
+      </div>
     </header>
   );
 }
-  
+
 
 

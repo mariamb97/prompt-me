@@ -1,40 +1,24 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const db = require( "../model/helper" );
+const db = require("../model/helper");
 const promptMustExist = require("../guards/promptMustExist");
 
-/* GET prompts. */
-router.get( '/', async function ( req, res) {
+
+router.get("/", async function (req, res) {
   try {
     const results = await db(
-      "SELECT prompts.prompt_id, prompts.prompt_description, prompts.prompt_requirements, prompts.prompt_links, prompts.category_id, users.user_nickname, categories.category_name FROM prompts INNER JOIN users ON prompts.user_id = users.user_id INNER JOIN categories ON prompts.category_id = categories.category_id;"
+      "SELECT prompts.id, prompts.description, prompts.requirements, prompts.category_id, users.nickname, categories.name FROM prompts INNER JOIN users ON prompts.user_id = users.id INNER JOIN categories ON prompts.category_id = categories.id;"
     );
-
-    /*
-      SELECT 
-        prompts.prompt_description, 
-        prompts.prompt_requirements, 
-        prompts.prompt_links, 
-        users.user_firstname,
-        categories.category_name,
-      FROM prompts 
-        INNER JOIN users ON prompts.user_id = users.user_id
-        INNER JOIN categories ON prompts.category_id = categories.category_id
-      ;
-
-    */
     // SELECT * FROM prompts;
     res.send(results.data);
-  } catch ( err ) {
-    res.status(500).send("error: "+err);
+  } catch (err) {
+    res.status(500).send("error: " + err);
   }
-} );
+});
 
 
-// GET a prompt.
-router.get("/:prompt_id", promptMustExist, async function (req, res) {
-  res.send( req.prompt );
-  
+router.get("/:id", promptMustExist, async function (req, res) {
+  res.send(req.prompt);
   // try {
   //   const results = await db(
   //     `SELECT * FROM prompts WHERE prompt_id=${req.params.prompt_id};`
@@ -46,55 +30,34 @@ router.get("/:prompt_id", promptMustExist, async function (req, res) {
 
 });
 
-// POST prompt.
-router.post("/", async function(req, res) {
+
+router.post("/", async function (req, res) {
+
+  const { description, requirements, user_id, category_id } = req.body
+
   try {
     await db(
-      `INSERT INTO prompts (prompt_description, prompt_requirements, prompt_links, category_id, user_id) VALUES ("${req.body.prompt_description}", "${req.body.prompt_requirements}", "${req.body.prompt_links}", "${req.body.category_id}", "${req.body.user_id}");`
+      `INSERT INTO prompts (description, requirements, user_id, category_id) VALUES ("${description}", "${requirements}", "${user_id}", "${category_id}");`
     );
+
     const results = await db(
-      "SELECT prompts.prompt_id, prompts.prompt_description, prompts.prompt_requirements, prompts.category_id, users.user_nickname, categories.category_name FROM prompts INNER JOIN users ON prompts.user_id = users.user_id INNER JOIN categories ON prompts.category_id = categories.category_id ORDER BY prompt_id DESC LIMIT 1;"
-      // "SELECT * FROM prompts ORDER BY prompt_id DESC LIMIT 1;"
-      /*
-
-
-SELECT 
-  prompts.prompt_id, 
-  prompts.prompt_description, 
-  prompts.prompt_requirements, 
-  prompts.prompt_links, 
-  prompts.category_id, 
-  users.user_nickname, 
-  categories.category_name 
-FROM 
-  prompts 
-ORDER BY prompt_id DESC LIMIT 1
-INNER JOIN users 
-  ON prompts.user_id = users.user_id 
-INNER JOIN categories 
-  ON prompts.category_id = categories.category_id;
-
-*/
+      "SELECT prompts.id, prompts.description, prompts.requirements, prompts.category_id, users.nickname, categories.name FROM prompts INNER JOIN users ON prompts.user_id = users.id INNER JOIN categories ON prompts.category_id = categories.id ORDER BY id DESC LIMIT 1;"
     );
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
-} );
+});
 
 
-// DELETE prompt.
-router.delete("/:prompt_id", promptMustExist, async function(req, res) {
+router.delete("/:id", promptMustExist, async function (req, res) {
   try {
-    await db(`DELETE FROM prompts WHERE prompt_id=${req.params.prompt_id};`);
+    await db(`DELETE FROM prompts WHERE id=${req.params.id};`);
     const results = await db("SELECT * FROM prompts;");
     res.send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
-} );
-
-// req.params.prompt_id
-
+});
 
 module.exports = router;

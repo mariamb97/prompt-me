@@ -1,78 +1,72 @@
 var express = require("express");
 var router = express.Router();
-const db = require( "../model/helper" );
+const db = require("../model/helper");
 const categoryMustExist = require("../guards/categoryMustExist");
+const userMustBeLoggedIn = require("../guards/userMustBeLoggedIn")
 
 
-// GET categories. 
-router.get( '/', async function ( req, res) {
+router.get('/users', userMustBeLoggedIn, async function (req, res) {
   try {
-    const results = await db( "SELECT * FROM categories;" );
+    const results = await db(`SELECT * FROM categories WHERE user_id="${req.user.userId}" ;`);
     res.send(results.data);
-    
-  } catch ( err ) {
+
+  } catch (err) {
     res.status(500).send(err);
   }
-} );
+});
 
 
-// GET category.
-router.get( "/:category_id", categoryMustExist, async function ( req, res ) {
+router.get('/', async function (req, res) {
+  try {
+    const results = await db("SELECT * FROM categories;");
+    res.send(results.data);
+
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+router.get("/:id", categoryMustExist, async function (req, res) {
   res.send(req.category);
-    
-//   try {
-//     const results = await db(
-//       `SELECT * FROM categories WHERE category_id=${req.params.category_id};`
-//     );
-//     res.send(results.data);
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
-  
-  
-} );
 
-      // SELECT 
-      //   prompts.prompt_description, 
-      //   prompts.prompt_requirements, 
-      //   prompts.prompt_links, 
-      //   users.user_firstname,
-      //   categories.category_name,
-      // FROM prompts 
-      //   INNER JOIN users ON prompts.user_id = users.user_id
-      //   INNER JOIN categories ON prompts.category_id = categories.category_id
-      // ;
+  //   try {
+  //     const results = await db(
+  //       `SELECT * FROM categories WHERE id=${req.params.id};`
+  //     );
+  //     res.send(results.data);
+  //   } catch (err) {
+  //     res.status(500).send(err);
+  //   }
 
-      // ALTER TABLE props MODIFY props_description datatype NOT NULL
 
+});
 
 
 // GET the prompts of A CATEGORY
-// /categories/id/prompts
-
 router.get("/:id/prompts", async function (req, res) {
   try {
     const { id } = req.params
-    // const id = req.params.id
-    console.log(`SELECT * FROM prompts WHERE category_id = ${id};`);
+    // console.log(`SELECT * FROM prompts WHERE category_id = ${id};`);
     const results = await db(
-      `SELECT prompts.prompt_id, prompts.prompt_description, prompts.prompt_requirements, prompts.prompt_links, prompts.category_id, users.user_nickname, categories.category_name FROM prompts INNER JOIN users ON prompts.user_id = users.user_id INNER JOIN categories ON prompts.category_id = categories.category_id WHERE prompts.category_id = ${id};`
+      `SELECT prompts.id, prompts.description, prompts.requirements, prompts.category_id, users.nickname, categories.name FROM prompts INNER JOIN users ON prompts.user_id = users.id INNER JOIN categories ON prompts.category_id = categories.id WHERE prompts.category_id = ${id};`
     );
     res.send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
-} );
+});
 
-// POST category
+
 router.post("/", async function (req, res) {
+  const { name, description, user_id } = req.body
   try {
     await db(
-      `INSERT INTO categories (category_name, category_description, user_id) VALUES ("${req.body.category_name}", "${req.body.category_description}", "${req.body.user_id}");`
+      `INSERT INTO categories (name, description, user_id) VALUES ("${name}", "${description}", "${user_id}");`
     );
 
     const results = await db(
-      "SELECT * FROM categories ORDER BY category_id DESC LIMIT 1;"
+      "SELECT * FROM categories ORDER BY id DESC LIMIT 1;"
     );
 
     res.status(201).send(results.data);
@@ -81,10 +75,10 @@ router.post("/", async function (req, res) {
   }
 });
 
-// DELETE a category from the DB
-router.delete("/:category_id", categoryMustExist, async function (req, res) {
+
+router.delete("/:id", categoryMustExist, async function (req, res) {
   try {
-    await db(`DELETE FROM categories WHERE category_id=${req.params.category_id};`);
+    await db(`DELETE FROM categories WHERE id=${req.params.id};`);
     const results = await db("SELECT * FROM categories;");
 
     res.send(results.data);

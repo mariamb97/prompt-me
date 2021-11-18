@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Home from "./components/Home";
 import AddPrompt from "./components/AddPrompt";
 import AddUser from "./components/AddUser";
-import User from "./components/User";
+import UserAuthentication from "./components/UserAuthentication";
 import AddCategory from "./components/AddCategory";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
@@ -18,9 +17,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<AddUser />} />
           <Route path="/add" element={<AddPrompt />} />
-          <Route path="profile" element={<User />} />
+          <Route path="/authentication" element={<UserAuthentication />} />
+          <Route path="/register" element={<AddUser />} />
           <Route path="/categories" element={<Categories />}>
             <Route path="add" element={<AddCategory />} />
             <Route path=":id" element={<Category />} />

@@ -1,22 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import User from "../img/user.svg";
 import Heart from "../img/heart-solid.svg"
 
-export default function Prompt( { prompt, handleDelete } ) {
-  let [ favourite, setFavourite ] = useState( false );
+export default function Prompt({ prompt, handleDelete }) {
+  let [favourite, setFavourite] = useState(false);
 
   const handleToggle = () => {
-    setFavourite( !favourite );
+    setFavourite(!favourite);
   }
 
   return (
     <article className="prompts">
       <section className="prompts__main">
-        <p>#{prompt.prompt_id}</p>
-        <p className="prompts__description">{prompt.prompt_description}</p>
+        <p>#{prompt.id}</p>
+        <p className="prompts__description">{prompt.description}</p>
         <div className="prompts__requirements">
-          {prompt.prompt_requirements &&
-            prompt.prompt_requirements
+          {prompt.requirements &&
+            prompt.requirements
               .split("|")
               .map((e, i) => <p key={i}>{e}</p>)}
         </div>
@@ -41,11 +41,11 @@ export default function Prompt( { prompt, handleDelete } ) {
             </div>
           </a>
           <div>
-            <p>{prompt.user_nickname}</p>
+            <p>{prompt.nickname}</p>
           </div>
         </div>
         <div className="prompts-footer__options">
-          <img className={`heart ${favourite ? "favourite" : null}`} src={ Heart } alt="heart" onClick={()=>handleToggle()}/>
+          <img className={`heart ${favourite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggle()} />
           <button>Fork</button>
           <button>Edit</button>
           <button onClick={() => handleDelete(prompt)}>Delete</button>
