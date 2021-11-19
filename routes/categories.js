@@ -5,9 +5,9 @@ const categoryMustExist = require("../guards/categoryMustExist");
 const userMustBeLoggedIn = require("../guards/userMustBeLoggedIn")
 
 
-router.get('/users', userMustBeLoggedIn, async function (req, res) {
+router.get('/', async function (req, res) {
   try {
-    const results = await db(`SELECT * FROM categories WHERE user_id="${req.user.userId}" ;`);
+    const results = await db("SELECT * FROM categories;");
     res.send(results.data);
 
   } catch (err) {
@@ -16,9 +16,9 @@ router.get('/users', userMustBeLoggedIn, async function (req, res) {
 });
 
 
-router.get('/', async function (req, res) {
+router.get('/users', userMustBeLoggedIn, async function (req, res) {
   try {
-    const results = await db("SELECT * FROM categories;");
+    const results = await db(`SELECT * FROM categories WHERE user_id="${req.user.userId}" ;`);
     res.send(results.data);
 
   } catch (err) {
@@ -58,11 +58,11 @@ router.get("/:id/prompts", async function (req, res) {
 });
 
 
-router.post("/", async function (req, res) {
+router.post("/", userMustBeLoggedIn, async function (req, res) {
   const { name, description, user_id } = req.body
   try {
     await db(
-      `INSERT INTO categories (name, description, user_id) VALUES ("${name}", "${description}", "${user_id}");`
+      `INSERT INTO categories (name, description, user_id) VALUES ("${name}", "${description}", "${req.user.userId}");`
     );
 
     const results = await db(

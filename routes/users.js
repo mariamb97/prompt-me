@@ -45,7 +45,7 @@ router.post("/", async function (req, res) {
 router.delete("/:id", userMustExist, async function (req, res) {
   const { id } = req.params
   try {
-    await db(`DELETE FROM users WHERE id= ${id};`);
+    await db(`DELETE FROM prompts WHERE user_id= ${id}; DELETE FROM categories WHERE user_id= ${id}; DELETE FROM users WHERE id= ${id}; `);
     const results = await db("SELECT * FROM users;");
 
     res.send(results.data);

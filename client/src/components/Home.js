@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import Prompt from "./Prompt";
 
 
-export default function Home() {
+export default function Home({ userCategories }) {
   let [prompts, setPrompts] = useState([]);
-  let [categories, setCategories] = useState([]);
   let [error, setError] = useState(null);
   let [filter, setFilter] = useState([]);
 
   useEffect(() => {
     getPrompts();
-    getCategories();
   }, []);
 
   const getPrompts = async () => {
@@ -19,16 +17,6 @@ export default function Home() {
       const prompts = await res.json();
       setPrompts(prompts);
       setFilter(prompts);
-    } catch (err) {
-      setError(error);
-    }
-  };
-
-  const getCategories = async () => {
-    try {
-      const res = await fetch("/categories", {});
-      const categories = await res.json();
-      setCategories(categories);
     } catch (err) {
       setError(error);
     }
@@ -85,14 +73,14 @@ export default function Home() {
           <li>
             <button onClick={() => handleFilterAll()}>All</button>
           </li>
-          {categories &&
-            categories
+          {userCategories &&
+            userCategories
               // ??
-              .filter((category, i) => i < 5)
-              .map((category, i) => (
+              .filter((userCategory, i) => i < 5)
+              .map((userCategory, i) => (
                 <li key={i}>
-                  <button onClick={() => handleFilter(category)}>
-                    {category.name}
+                  <button onClick={() => handleFilter(userCategory)}>
+                    {userCategory.name}
                   </button>
                 </li>
               ))}

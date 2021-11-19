@@ -1,46 +1,45 @@
 import React, { useState } from 'react';
 
-export default function AddCategory() {
+export default function AddCategory({ addUserCategory }) {
   let [alert, setAlert] = useState(null);
   let [category, setCategory] = useState(null);
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
-  let [userId, setUserId] = useState("");
 
 
   const handleChangeName = e => setName(e.target.value);
-  const handleChangeUserId = (e) => setUserId(e.target.value);
   const handleChangeDescription = (e) => setDescription(e.target.value);
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     addCategory();
   }
 
 
   const addCategory = async () => {
-    if (name && description && userId) {
+    if (name && description) {
       try {
         const res = await fetch("/categories", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
             name: name,
             description: description,
-            user_id: userId,
           }),
         });
 
         setDescription(" ");
         setName("");
-        setUserId("");
 
         const category = await res.json();
-        setCategory(category[0]);
-        console.log("category: " + JSON.stringify(category));
+
+        addUserCategory(category[0])
+        // setCategory(category[0]);
+
         if (category) return setAlert("Category added succesfully.")
 
       } catch (err) {
@@ -74,16 +73,6 @@ export default function AddCategory() {
             value={description}
             onChange={(e) => handleChangeDescription(e)}
           ></input>
-        </div>
-        <div>
-          <label htmlFor="input_userId">User Id</label>
-          <input
-            id="input_userId"
-            name="input_userId"
-            type="number"
-            value={userId}
-            onChange={(e) => handleChangeUserId(e)}
-          />
         </div>
         <button type="submit">Submit</button>
       </form>

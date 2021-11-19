@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 const promptMustExist = require("../guards/promptMustExist");
+const userMustBeLoggedIn = require("../guards/userMustBeLoggedIn")
 
 
 router.get("/", async function (req, res) {
@@ -13,6 +14,16 @@ router.get("/", async function (req, res) {
     res.send(results.data);
   } catch (err) {
     res.status(500).send("error: " + err);
+  }
+});
+
+router.get('/users', userMustBeLoggedIn, async function (req, res) {
+  try {
+    const results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" ;`);
+    res.send(results.data);
+
+  } catch (err) {
+    res.status(500).send(err);
   }
 });
 
@@ -31,13 +42,13 @@ router.get("/:id", promptMustExist, async function (req, res) {
 });
 
 
-router.post("/", async function (req, res) {
+router.post("/", userMustBeLoggedIn, async function (req, res) {
 
   const { description, requirements, user_id, category_id } = req.body
 
   try {
     await db(
-      `INSERT INTO prompts (description, requirements, user_id, category_id) VALUES ("${description}", "${requirements}", "${user_id}", "${category_id}");`
+      `INSERT INTO prompts (description, requirements, user_id, category_id) VALUES ("${description}", "${requirements}", "${req.user.userId}", "${category_id}");`
     );
 
     const results = await db(

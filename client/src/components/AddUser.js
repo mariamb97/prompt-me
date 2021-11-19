@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 export default function AddUser() {
@@ -10,6 +11,8 @@ export default function AddUser() {
   let [lastname, setLastname] = useState("");
   let [password, setPassword] = useState("");
   let [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
 
 
   const handleChangeNickname = (event) => setNickname(event.target.value);
@@ -51,7 +54,7 @@ export default function AddUser() {
 
         const user = await res.json();
         setUser(user[0]);
-        console.log(user);
+        navigate("/authentication")
       } catch (err) {
         setAlert(err);
         console.log(err);

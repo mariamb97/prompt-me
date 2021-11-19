@@ -1,53 +1,41 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AddPrompt() {
+export default function AddPrompt({ userCategories }) {
 
   let [alert, setAlert] = useState(null);
   let [prompt, setPrompt] = useState(null);
-  let [description, setDescription] = useState("");
-  let [requirements, setRequirements] = useState("");
-  let [categories, setCategories] = useState("");
+  let [descriptionInput, setDescription] = useState("");
+  let [requirementsInput, setRequirements] = useState("");
+  let [categoryInput, setCategories] = useState("");
   let [userId, setUserId] = useState("");
-  let [listCategories, setListCategories] = useState([]);
 
   const handleChangeDescription = (e) => setDescription(e.target.value);
   const handleChangeRequirements = (e) => setRequirements(e.target.value);
   const handleChangeCategories = (e) => setCategories(e.target.value);
   const handleChangeUserId = (e) => setUserId(e.target.value);
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     addPrompt();
   }
 
-  const getCategories = async () => {
-    try {
-      const res = await fetch("/categories", {});
-      const listCategories = await res.json();
-      setListCategories(listCategories);
-    } catch (err) {
-      console.log(err);
-      setAlert(err);
-    }
-  };
 
   const addPrompt = async () => {
-    if (description && categories && userId) {
+    if (descriptionInput && categoryInput && userId) {
       try {
         const res = await fetch("/prompts", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            description: description,
-            requirements: requirements,
+            description: descriptionInput,
+            requirements: requirementsInput,
             user_id: userId,
-            category_id: categories,
+            category_id: categoryInput,
           }),
         });
 
@@ -84,7 +72,7 @@ export default function AddPrompt() {
               name="input_description"
               rows="5"
               required
-              value={description}
+              value={descriptionInput}
               onChange={(e) => handleChangeDescription(e)}
             ></textarea>
           </div>
@@ -95,7 +83,7 @@ export default function AddPrompt() {
             <textarea
               id="input_requirements"
               name="input_requirements"
-              value={requirements}
+              value={requirementsInput}
               onChange={(e) => handleChangeRequirements(e)}
             ></textarea>
           </div>
@@ -104,12 +92,12 @@ export default function AddPrompt() {
             <select
               id="input_categories"
               name="input_categories"
-              value={categories}
+              value={categoryInput}
               onChange={(e) => handleChangeCategories(e)}
             >
               <option>Choose a category</option>
-              {listCategories &&
-                listCategories.map((category, i) => (
+              {userCategories &&
+                userCategories.map((category, i) => (
                   <option key={i} value={`${category.id}`}>
                     {category.name}
                   </option>

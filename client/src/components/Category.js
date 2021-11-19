@@ -18,7 +18,6 @@ export default function Category() {
       const res = await fetch(`/categories/${id}/prompts`);
       const prompts = await res.json();
       setPrompts(prompts);
-      // console.log(prompts)
 
     } catch (err) {
       console.log(err);

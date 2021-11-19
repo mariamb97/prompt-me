@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function User() {
+export default function User({ onSuccess }) {
   let [alert, setAlert] = useState(null);
   let [user, setUser] = useState(null);
   const [inputLogIn, setInputLogIn] = useState({
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+
 
   const handleChangeInputLogIn = (event) => {
     const { value, name } = event.target;
@@ -37,6 +40,8 @@ export default function User() {
         });
         const data = await response.json();
         localStorage.setItem("token", data.token);
+        onSuccess(true)
+        navigate("/")
       } catch (err) {
         setAlert(err);
         console.log(err);
@@ -45,10 +50,6 @@ export default function User() {
       setAlert("Please fill all the fields.");
     }
   };
-
-  const logOut = async () => {
-    localStorage.removeItem("token")
-  }
 
   // const getUser = async (e) => {
   //   try {
