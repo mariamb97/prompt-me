@@ -4,13 +4,14 @@ import User from "../img/user.svg";
 // import Logo from "../img/logo.png";
 import "../App.css";
 
-export default function Header({ onSuccess, isAuth }) {
+export default function Header({ onSuccess, isAuth, setUserCategories }) {
 
   const navigate = useNavigate()
 
   const logOut = async () => {
     localStorage.removeItem("token")
     onSuccess(false)
+    setUserCategories([])
     navigate("/authentication")
   }
 

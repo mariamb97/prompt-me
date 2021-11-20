@@ -28,7 +28,6 @@ function App() {
   }
 
   function addUserCategory(userCategory) {
-    console.log(userCategory)
     setUserCategories((state) => ([...state, userCategory]))
   }
 
@@ -53,9 +52,9 @@ function App() {
   return (
     <div id="wrapper">
       <BrowserRouter>
-        <Header onSuccess={onSuccess} isAuth={isAuth} />
+        <Header onSuccess={onSuccess} isAuth={isAuth} setUserCategories={setUserCategories} />
         <Routes>
-          <Route path="/authentication" element={<UserAuthentication onSuccess={onSuccess} />} />
+          <Route path="/authentication" element={<UserAuthentication onSuccess={onSuccess} getUserCategories={getUserCategories} />} />
           <Route path="/register" element={<AddUser />} />
           <Route path="/"
             element={

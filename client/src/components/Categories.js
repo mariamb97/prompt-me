@@ -10,10 +10,10 @@ export default function Category({ userCategories }) {
         <section className="categories__nav">
           <ul>
             {userCategories &&
-              userCategories.map((userCategory, i) => (
+              userCategories.map((category, i) => (
                 <li key={i}>
-                  <Link to={`/categories/${userCategory.id}`}>
-                    {userCategory.name}
+                  <Link to={`/categories/${category.id}`}>
+                    {category.name}
                   </Link>
                 </li>
               ))}

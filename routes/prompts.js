@@ -10,7 +10,6 @@ router.get("/", async function (req, res) {
     const results = await db(
       "SELECT prompts.id, prompts.description, prompts.requirements, prompts.category_id, users.nickname, categories.name FROM prompts INNER JOIN users ON prompts.user_id = users.id INNER JOIN categories ON prompts.category_id = categories.id;"
     );
-    // SELECT * FROM prompts;
     res.send(results.data);
   } catch (err) {
     res.status(500).send("error: " + err);
@@ -19,7 +18,18 @@ router.get("/", async function (req, res) {
 
 router.get('/users', userMustBeLoggedIn, async function (req, res) {
   try {
-    const results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" ;`);
+    const { categories } = req.query;
+
+    let results = null;
+
+    if (!categories || !categories.length) {
+      results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" ;`)
+    }
+    else {
+      const categoriesJoined = categories.join(",");
+      results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" AND (category_id) IN (${categoriesJoined})  ;`)
+    }
+
     res.send(results.data);
 
   } catch (err) {

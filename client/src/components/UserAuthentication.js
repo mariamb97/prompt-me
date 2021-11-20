@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-export default function User({ onSuccess }) {
+export default function User({ onSuccess, getUserCategories }) {
   let [alert, setAlert] = useState(null);
   let [user, setUser] = useState(null);
   const [inputLogIn, setInputLogIn] = useState({
@@ -41,6 +41,7 @@ export default function User({ onSuccess }) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         onSuccess(true)
+        getUserCategories()
         navigate("/")
       } catch (err) {
         setAlert(err);

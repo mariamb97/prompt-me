@@ -3,64 +3,69 @@ import Prompt from "./Prompt";
 
 
 export default function Home({ userCategories }) {
-  let [prompts, setPrompts] = useState([]);
-  let [error, setError] = useState(null);
-  let [filter, setFilter] = useState([]);
+  let [userPrompts, setUserPrompts] = useState([]);
+
 
   useEffect(() => {
-    getPrompts();
+    getUserPrompts();
   }, []);
 
-  const getPrompts = async () => {
-    try {
-      const res = await fetch("/prompts", {});
-      const prompts = await res.json();
-      setPrompts(prompts);
-      setFilter(prompts);
-    } catch (err) {
-      setError(error);
-    }
-  };
 
-  const handleFilter = (category) => {
-    setError(null);
-    setFilter(prompts);
-    addFilter(category);
-  };
+  const getUserPrompts = async () => {
+    try {
+      const response = await fetch("/prompts/users", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const userPrompts = await response.json();
+      if (!userPrompts.message) {
+        setUserPrompts(userPrompts);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleFilterAll = () => {
-    setError(null);
-    setFilter(prompts);
+    getUserPrompts();
+  };
+
+
+  const getFilteredPromptsByCategory = (category) => {
+
+    fetch(`/prompts/users/?categories[]=${category.id}`, {
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((prompts) => {
+        setUserPrompts(prompts)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleDelete = (element) => {
-    setError(null);
     deletePrompt(element.id);
-  };
-
-  const addFilter = (category) => {
-    const filter = prompts.filter(
-      (prompt) => prompt.category_id === category.id
-    );
-    setFilter(filter);
   };
 
   const deletePrompt = async (id) => {
     try {
-      const res = await fetch(`/prompts/${id}`, {
+      const response = await fetch(`/prompts/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const prompts = await res.json();
+      const prompts = await response.json();
 
-      setPrompts(prompts);
-      setFilter(prompts);
-    } catch (err) {
-      console.log(err);
-      setError(err);
+      setUserPrompts(prompts);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -75,20 +80,17 @@ export default function Home({ userCategories }) {
           </li>
           {userCategories &&
             userCategories
-              // ??
-              .filter((userCategory, i) => i < 5)
-              .map((userCategory, i) => (
+              .map((category, i) => (
                 <li key={i}>
-                  <button onClick={() => handleFilter(userCategory)}>
-                    {userCategory.name}
+                  <button onClick={() => getFilteredPromptsByCategory(category)}>
+                    {category.name}
                   </button>
                 </li>
               ))}
         </ul>
       </div>
-      {error && <p>error</p>}
-      {filter &&
-        filter.map((prompt, index) => (
+      {userPrompts &&
+        userPrompts.map((prompt, index) => (
           <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
         ))}
     </section>
