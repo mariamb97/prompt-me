@@ -78,7 +78,7 @@ function App() {
             }
           >
             <Route path="add" element={<AddCategory addUserCategory={addUserCategory} />} />
-            <Route path=":id" element={<Category />} />
+            <Route path=":id" element={<Category getUserCategories={getUserCategories} />} />
           </Route>
           <Route
             path="/profile"
@@ -96,27 +96,5 @@ function App() {
 
 export default App;
 
-// <BrowserRouter>
-// <Header />
-// <Routes>
-//   <Route path="/" element={<Home />} />
-//   <Route path="/add" element={<AddPrompt />} />
-//   <Route path="/authentication" element={<UserAuthentication />} />
-//   <Route path="/register" element={<AddUser />} />
-//   <Route path="/categories" element={<Categories />}>
-//     <Route path="add" element={<AddCategory />} />
-//     <Route path=":id" element={<Category />} />
-//   </Route>
-//   {/* <ProtectedRoute path="/profile" component={Profile} isAuth={isAuth} /> */}
-//   <Route
-//     path="/profile"
-//     element={
-//       <ProtectedRoute>
-//         <Profile />
-//       </ProtectedRoute>
-//     }
-//   />
-// </Routes>
-// </BrowserRouter>
 
 

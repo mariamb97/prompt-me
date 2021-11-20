@@ -1,42 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Prompt from "./Prompt";
 
 
-export default function Category() {
-
-  const [prompts, setPrompts] = useState([]);
+export default function Category({ getUserCategories }) {
+  const [userCategory, setUserCategory] = useState({})
   const { id } = useParams();
 
   useEffect(() => {
-    getData();
+    getUserCategory();
   }, [id]);
 
-  const getData = async () => {
+  const getUserCategory = async () => {
 
     try {
-      const res = await fetch(`/categories/${id}/prompts`);
-      const prompts = await res.json();
-      setPrompts(prompts);
+      const res = await fetch(`/categories/${id}`);
+      const category = await res.json();
+      setUserCategory(category);
 
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleDelete = (prompt) => {
-    deletePrompt(prompt.id);
-  };
-
-  const deletePrompt = async (promptId) => {
+  const deleteCategory = async () => {
     try {
-      await fetch(`/prompts/${promptId}`, {
+      await fetch(`/categories/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      getData(id)
+      setUserCategory({})
+      getUserCategories()
     } catch (err) {
       console.log(err);;
     }
@@ -44,12 +40,9 @@ export default function Category() {
 
   return (
     <section>
-      {prompts.length > 0 &&
-        <h1>{prompts[0].name}</h1>}
-
-      {prompts.map((prompt, index) => (
-        <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
-      ))}
+      <h1> {userCategory.name} </h1>
+      <div> {userCategory.description} </div>
+      {userCategory.name && <button onClick={deleteCategory}>Delete</button>}
     </section>
   );
 }

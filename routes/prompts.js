@@ -40,14 +40,6 @@ router.get('/users', userMustBeLoggedIn, async function (req, res) {
 
 router.get("/:id", promptMustExist, async function (req, res) {
   res.send(req.prompt);
-  // try {
-  //   const results = await db(
-  //     `SELECT * FROM prompts WHERE prompt_id=${req.params.prompt_id};`
-  //   );
-  //   res.send(results.data);
-  // } catch (err) {
-  //   res.status(500).send(err);
-  // }
 
 });
 
@@ -71,10 +63,21 @@ router.post("/", userMustBeLoggedIn, async function (req, res) {
 });
 
 
-router.delete("/:id", promptMustExist, async function (req, res) {
+router.delete("/:id", promptMustExist, userMustBeLoggedIn, async function (req, res) {
   try {
-    await db(`DELETE FROM prompts WHERE id=${req.params.id};`);
-    const results = await db("SELECT * FROM prompts;");
+    const { categories } = req.query;
+    let results = null;
+
+    await db(`DELETE FROM prompts WHERE id=${req.params.id};`)
+
+    if (!categories || !categories.length) {
+      results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" ;`)
+    }
+    else {
+      const categoriesJoined = categories.join(",");
+      results = await db(`SELECT * FROM prompts WHERE user_id="${req.user.userId}" AND (category_id) IN (${categoriesJoined});`)
+    }
+
     res.send(results.data);
   } catch (err) {
     res.status(500).send(err);

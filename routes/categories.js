@@ -30,16 +30,6 @@ router.get('/users', userMustBeLoggedIn, async function (req, res) {
 router.get("/:id", categoryMustExist, async function (req, res) {
   res.send(req.category);
 
-  //   try {
-  //     const results = await db(
-  //       `SELECT * FROM categories WHERE id=${req.params.id};`
-  //     );
-  //     res.send(results.data);
-  //   } catch (err) {
-  //     res.status(500).send(err);
-  //   }
-
-
 });
 
 
@@ -47,7 +37,6 @@ router.get("/:id", categoryMustExist, async function (req, res) {
 router.get("/:id/prompts", async function (req, res) {
   try {
     const { id } = req.params
-    // console.log(`SELECT * FROM prompts WHERE category_id = ${id};`);
     const results = await db(
       `SELECT prompts.id, prompts.description, prompts.requirements, prompts.category_id, users.nickname, categories.name FROM prompts INNER JOIN users ON prompts.user_id = users.id INNER JOIN categories ON prompts.category_id = categories.id WHERE prompts.category_id = ${id};`
     );
@@ -76,12 +65,11 @@ router.post("/", userMustBeLoggedIn, async function (req, res) {
 });
 
 
-router.delete("/:id", categoryMustExist, async function (req, res) {
+router.delete("/:id", categoryMustExist, userMustBeLoggedIn, async function (req, res) {
   try {
-    await db(`DELETE FROM categories WHERE id=${req.params.id};`);
-    const results = await db("SELECT * FROM categories;");
-
+    const results = await db(`DELETE FROM prompts WHERE category_id=${req.params.id}; DELETE FROM categories WHERE id=${req.params.id};`);
     res.send(results.data);
+
   } catch (err) {
     res.status(500).send(err);
   }

@@ -3,38 +3,29 @@ import Prompt from "./Prompt";
 
 
 export default function Home({ userCategories }) {
-  let [userPrompts, setUserPrompts] = useState([]);
+  const [userPrompts, setUserPrompts] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState({})
 
 
   useEffect(() => {
-    getUserPrompts();
+    getFilteredPromptsByCategory();
   }, []);
 
-
-  const getUserPrompts = async () => {
-    try {
-      const response = await fetch("/prompts/users", {
-        headers: {
-          authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      const userPrompts = await response.json();
-      if (!userPrompts.message) {
-        setUserPrompts(userPrompts);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   const handleFilterAll = () => {
-    getUserPrompts();
+    getFilteredPromptsByCategory();
+  };
+
+  const handleClickCategory = (category, categoryId) => {
+    setCurrentCategory(category)
+    getFilteredPromptsByCategory(categoryId);
   };
 
 
-  const getFilteredPromptsByCategory = (category) => {
+  const getFilteredPromptsByCategory = (categoryId) => {
+    let queryString = ""
+    if (categoryId) queryString = `/?categories[]=${categoryId}`
 
-    fetch(`/prompts/users/?categories[]=${category.id}`, {
+    fetch(`/prompts/users${queryString}`, {
       headers: {
         authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -52,18 +43,23 @@ export default function Home({ userCategories }) {
     deletePrompt(element.id);
   };
 
-  const deletePrompt = async (id) => {
+  const deletePrompt = async (promptId) => {
+    let queryString = ""
+
+    if (currentCategory.id) queryString = `/?categories[]=${currentCategory.id}`
+
     try {
-      const response = await fetch(`/prompts/${id}`, {
+      const response = await fetch(`/prompts/${promptId}${queryString}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
 
-      const prompts = await response.json();
+      const userPrompts = await response.json();
+      setUserPrompts(userPrompts)
 
-      setUserPrompts(prompts);
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +78,7 @@ export default function Home({ userCategories }) {
             userCategories
               .map((category, i) => (
                 <li key={i}>
-                  <button onClick={() => getFilteredPromptsByCategory(category)}>
+                  <button onClick={() => handleClickCategory(category, category.id)}>
                     {category.name}
                   </button>
                 </li>

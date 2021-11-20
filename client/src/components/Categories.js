@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 
 
-export default function Category({ userCategories }) {
+export default function Categories({ userCategories }) {
 
   return (
     <section className="main" id="categories">

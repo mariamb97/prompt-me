@@ -7,13 +7,10 @@ export default function AddPrompt({ userCategories }) {
   let [descriptionInput, setDescription] = useState("");
   let [requirementsInput, setRequirements] = useState("");
   let [categoryInput, setCategories] = useState("");
-  let [userId, setUserId] = useState("");
 
   const handleChangeDescription = (e) => setDescription(e.target.value);
   const handleChangeRequirements = (e) => setRequirements(e.target.value);
   const handleChangeCategories = (e) => setCategories(e.target.value);
-  const handleChangeUserId = (e) => setUserId(e.target.value);
-
 
 
   const handleSubmit = (e) => {
@@ -23,7 +20,7 @@ export default function AddPrompt({ userCategories }) {
 
 
   const addPrompt = async () => {
-    if (descriptionInput && categoryInput && userId) {
+    if (descriptionInput && categoryInput) {
       try {
         const res = await fetch("/prompts", {
           method: "POST",
@@ -34,7 +31,6 @@ export default function AddPrompt({ userCategories }) {
           body: JSON.stringify({
             description: descriptionInput,
             requirements: requirementsInput,
-            user_id: userId,
             category_id: categoryInput,
           }),
         });
@@ -42,7 +38,6 @@ export default function AddPrompt({ userCategories }) {
         setDescription("");
         setRequirements("");
         setCategories("");
-        setUserId("");
 
         const prompt = await res.json();
         setPrompt(prompt[0]);
@@ -103,17 +98,6 @@ export default function AddPrompt({ userCategories }) {
                   </option>
                 ))}
             </select>
-          </div>
-          <div>
-            <label htmlFor="input_userId">User ID*</label>
-            <input
-              id="input_userId"
-              name="input_userId"
-              required
-              type="number"
-              value={userId}
-              onChange={(e) => handleChangeUserId(e)}
-            />
           </div>
 
           <button type="submit">Submit</button>
