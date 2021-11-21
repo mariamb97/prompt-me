@@ -49,7 +49,11 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
             {/* <Link to="/authentication">
           <img src={User} alt="user avatar"></img>
         </Link> */}
-            <img src={User} alt="user avatar"></img>
+            <Link to="/profile">
+              <img src={User} alt="user avatar"></img>
+            </Link>
+
+
             <button onClick={logOut}>Log Out</button>
           </div>
           <div>  <Outlet /></div>

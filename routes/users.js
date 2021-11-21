@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 const userMustExist = require("../guards/userMustExist");
+const userMustBeLoggedIn = require("../guards/userMustBeLoggedIn")
 
 
 router.get("/", async function (req, res) {
@@ -13,15 +14,15 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.get("/:id", userMustExist, async function (req, res) {
-  res.send(req.user);
+router.get("/user", userMustBeLoggedIn, async function (req, res) {
 
-  // try {
-  //   const results = await db(`SELECT * FROM users WHERE user_id= ${req.params.user_id};`);
-  //   res.send(results.data);
-  // } catch (err) {
-  //   res.status(500).send(err);
-  // }
+  try {
+    const results = await db(`SELECT * FROM users WHERE id="${req.user.userId}"`);
+    res.send(results.data);
+
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 
@@ -35,6 +36,18 @@ router.post("/", async function (req, res) {
     const results = await db(
       "SELECT * FROM users ORDER BY id DESC LIMIT 1;"
     );
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.put("/", userMustBeLoggedIn, async (req, res) => {
+  const { nickname, email, firstname, lastname } = req.body
+  try {
+    await db(`UPDATE users SET nickname = "${nickname}", email = "${email}", firstname = "${firstname}", lastname = "${lastname}"  WHERE id = "${req.user.userId}";`);
+
+    const results = await db(`SELECT * FROM users  WHERE id = ${req.user.userId};`);
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);

@@ -48,7 +48,7 @@ router.get("/:id/prompts", async function (req, res) {
 
 
 router.post("/", userMustBeLoggedIn, async function (req, res) {
-  const { name, description, user_id } = req.body
+  const { name, description } = req.body
   try {
     await db(
       `INSERT INTO categories (name, description, user_id) VALUES ("${name}", "${description}", "${req.user.userId}");`
@@ -58,6 +58,18 @@ router.post("/", userMustBeLoggedIn, async function (req, res) {
       "SELECT * FROM categories ORDER BY id DESC LIMIT 1;"
     );
 
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.put("/:id", userMustBeLoggedIn, async (req, res) => {
+  const { name, description } = req.body
+  try {
+    await db(`UPDATE categories SET name = "${name}", description = "${description}" WHERE id = "${req.params.id}";`);
+
+    const results = await db(`SELECT * FROM categories  WHERE id = ${req.params.id};`);
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);

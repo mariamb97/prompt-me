@@ -5,7 +5,7 @@ export default function Categories({ userCategories }) {
 
   return (
     <section className="main" id="categories">
-      <h1>Category View</h1>
+      <h1>Add or Edit your Categories</h1>
       <div id="categories__main">
         <section className="categories__nav">
           <ul>

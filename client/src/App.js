@@ -16,7 +16,6 @@ import ProtectedRoute from "./ProtectedRoute";
 function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"))
   const [userCategories, setUserCategories] = useState([]);
-  const [alert, setAlert] = useState(null);
 
 
   useEffect(() => {
@@ -44,7 +43,6 @@ function App() {
       }
     } catch (err) {
       console.log(err);
-      setAlert(err);
     }
   }
 
