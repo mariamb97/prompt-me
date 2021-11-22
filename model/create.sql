@@ -14,7 +14,7 @@ DROP TABLE if exists `prompts`;
 
 CREATE TABLE `prompts`(
     `id` INT NOT NULL AUTO_INCREMENT,
-    `description` VARCHAR( 255 ) NOT NULL,
+    `text` VARCHAR( 255 ) NOT NULL,
     `requirements` VARCHAR( 255 ) NOT NULL, 
     `user_id` INT NOT NULL,
     `category_id` INT NOT NULL, 

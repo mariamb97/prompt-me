@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Prompt from "./Prompt";
+import "./Prompt.css"
 
 
-export default function Home({ userCategories }) {
-  const [userPrompts, setUserPrompts] = useState([]);
+function Home({ userCategories, userPrompts, getFilteredPromptsByCategory, setUserPrompts }) {
   const [currentCategory, setCurrentCategory] = useState({})
 
-
-  useEffect(() => {
-    getFilteredPromptsByCategory();
-  }, []);
 
   const handleFilterAll = () => {
     getFilteredPromptsByCategory();
@@ -21,26 +17,9 @@ export default function Home({ userCategories }) {
   };
 
 
-  const getFilteredPromptsByCategory = (categoryId) => {
-    let queryString = ""
-    if (categoryId) queryString = `/?categories[]=${categoryId}`
-
-    fetch(`/prompts/users${queryString}`, {
-      headers: {
-        authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((prompts) => {
-        setUserPrompts(prompts)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleDelete = (element) => {
-    deletePrompt(element.id);
+  const handleDelete = (event, promptId) => {
+    event.preventDefault()
+    deletePrompt(promptId);
   };
 
   const deletePrompt = async (promptId) => {
@@ -86,9 +65,11 @@ export default function Home({ userCategories }) {
         </ul>
       </div>
       {userPrompts &&
-        userPrompts.map((prompt, index) => (
-          <Prompt key={index} prompt={prompt} handleDelete={handleDelete} />
+        userPrompts.map((prompt) => (
+          <Prompt key={prompt.id} prompt={prompt} setUserPrompts={setUserPrompts} handleDelete={handleDelete} />
         ))}
     </section>
   );
 }
+
+export default Home;

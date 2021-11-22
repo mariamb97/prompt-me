@@ -1,0 +1,11 @@
+#prompt_text_area {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  border: none;
+  resize: none;
+  font-size: 125%;
+}

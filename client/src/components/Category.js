@@ -77,35 +77,33 @@ export default function Category({ getUserCategories }) {
 
   return (
     <section>
-      {/* <h1> {userCategory.name} </h1>
-      <div> {userCategory.description} </div> */}
+      {userCategory.name &&
+        <form>
+          <div>
+            <label htmlFor="input_name">Name</label>
+            <input
+              id="category_name_input"
+              name="name"
+              value={userCategory.name}
+              onChange={handleChangeUpdateCategoryInput}
+            />
+          </div>
+          <div id="description">
+            <label htmlFor="category_description_input">Description</label>
+            <input
+              id="category_description_input"
+              name="description"
+              value={userCategory.description}
+              onChange={handleChangeUpdateCategoryInput}
+            ></input>
+          </div>
 
-      <form>
-        <div>
-          <label htmlFor="input_name">Name</label>
-          <input
-            id="category_name_input"
-            name="name"
-            value={userCategory.name}
-            onChange={handleChangeUpdateCategoryInput}
-          />
-        </div>
-        <div id="description">
-          <label htmlFor="category_description_input">Description</label>
-          <input
-            id="category_description_input"
-            name="description"
-            value={userCategory.description}
-            onChange={handleChangeUpdateCategoryInput}
-          ></input>
-        </div>
-        <button type="submit" onClick={(event) => handleSubmitUpdateCategory(event)}>OK</button>
-      </form>
-
+          <button type="submit" onClick={(event) => handleSubmitUpdateCategory(event)}>OK</button>
+        </form>
+      }
       {userCategory.name && <div>
         <button onClick={deleteCategory}>Delete</button>
       </div>}
-
     </section>
   );
 }

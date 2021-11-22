@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./Profile.css"
 
 function Profile() {
     const [user, setUser] = useState({})
@@ -64,22 +65,23 @@ function Profile() {
     return (
 
         <div className="main">
-            <form >
-                <label htmlFor="user-nickname">
-                    Username
-                    <input type="text" name="nickname" id="user-nickname" value={user.nickname} onChange={handleChangeUserInput} />
-                </label>
-                <label htmlFor="user-firstname">
-                    First Name
-                    <input type="text" name="firstname" id="user-firstname" value={user.firstname} onChange={handleChangeUserInput} />
-                </label>
-                <label htmlFor="user-lastname">
+            <form id="form-profile-user" >
+                <div>
+                    <label htmlFor="profile-user-nickname-input" className="profile-user-label"> Username</label>
+                    <input type="text" name="nickname" id="profile-user-nickname-input" className="profile-user-input" value={user.nickname} onChange={handleChangeUserInput} />
+                </div>
+                <div>
+                    <label htmlFor="profile-user-firstname-input" className="profile-user-label">  First Name </label>
+                    <input type="text" name="firstname" id="profile-user-firstname-input" className="profile-user-input" value={user.firstname} onChange={handleChangeUserInput} />
+
+                </div>
+                <label htmlFor="profile-user-lastname-input" className="profile-user-label">
                     Last Name
-                    <input type="text" name="lastname" id="user-lastname" value={user.lastname} onChange={handleChangeUserInput} />
+                    <input type="text" name="lastname" id="profile-user-lastname-input" className="profile-user-input" value={user.lastname} onChange={handleChangeUserInput} />
                 </label>
-                <label htmlFor="user-email">
-                    Last Name
-                    <input type="text" name="email" id="user-email" value={user.email} onChange={handleChangeUserInput} />
+                <label htmlFor="profile-user-email-input" className="profile-user-label">
+                    Email
+                    <input type="text" name="email" id="profile-user-email-input" className="profile-user-input" value={user.email} onChange={handleChangeUserInput} />
                 </label>
                 <button type="sumit" onClick={(event) => handleSubmitUpdateUser(event)}>Submit</button>
             </form>

@@ -16,18 +16,17 @@ import ProtectedRoute from "./ProtectedRoute";
 function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"))
   const [userCategories, setUserCategories] = useState([]);
+  const [userPrompts, setUserPrompts] = useState([]);
 
 
   useEffect(() => {
     getUserCategories()
+    getFilteredPromptsByCategory()
   }, []);
+
 
   function onSuccess(boolean) {
     setIsAuth(boolean)
-  }
-
-  function addUserCategory(userCategory) {
-    setUserCategories((state) => ([...state, userCategory]))
   }
 
   const getUserCategories = async () => {
@@ -46,6 +45,28 @@ function App() {
     }
   }
 
+  const getFilteredPromptsByCategory = (categoryId) => {
+    let queryString = ""
+    if (categoryId) queryString = `/?categories[]=${categoryId}`
+
+    fetch(`/prompts/users${queryString}`, {
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((prompts) => {
+        setUserPrompts(prompts)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  function addUserCategory(userCategory) {
+    setUserCategories((state) => ([...state, userCategory]))
+  }
+
 
   return (
     <div id="wrapper">
@@ -57,14 +78,14 @@ function App() {
           <Route path="/"
             element={
               <ProtectedRoute isAuth={isAuth}>
-                <Home userCategories={userCategories} />
+                <Home userCategories={userCategories} userPrompts={userPrompts} setUserPrompts={setUserPrompts} getFilteredPromptsByCategory={getFilteredPromptsByCategory} />
               </ProtectedRoute>
             }
           />
           <Route path="/add"
             element={
               <ProtectedRoute isAuth={isAuth}>
-                <AddPrompt userCategories={userCategories} />
+                <AddPrompt userCategories={userCategories} setUserPrompts={setUserPrompts} />
               </ProtectedRoute>
             }
           />

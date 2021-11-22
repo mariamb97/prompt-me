@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AddPrompt({ userCategories }) {
+export default function AddPrompt({ userCategories, setUserPrompts }) {
 
   let [alert, setAlert] = useState(null);
   let [prompt, setPrompt] = useState(null);
@@ -39,9 +39,9 @@ export default function AddPrompt({ userCategories }) {
         setRequirements("");
         setCategories("");
 
-        const prompt = await res.json();
-        setPrompt(prompt[0]);
-        console.log("prompt: ", prompt)
+        const prompts = await res.json();
+        setUserPrompts(prompts);
+        console.log("prompt: ", prompts)
         setAlert("Prompt added succesfully.");
 
 

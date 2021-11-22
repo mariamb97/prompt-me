@@ -1,0 +1,12 @@
+#form-profile-user {
+  display: inline;
+  /* flex-wrap: nowrap; */
+}
+
+.profile-user-input {
+  padding: 1%;
+}
+
+.profile-user-label {
+  padding: 5%;
+}
