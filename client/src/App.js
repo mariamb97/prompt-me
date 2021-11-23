@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Category from "./components/Category";
 import Profile from "./components/Profile";
+import PublicPrompts from "./components/PublicPrompts";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
@@ -118,6 +119,14 @@ function App() {
             <Route path="add" element={<AddCategory addUserCategory={addUserCategory} />} />
             <Route path=":id" element={<Category getUserCategories={getUserCategories} />} />
           </Route>
+          <Route
+            path="/public"
+            element={
+              <ProtectedRoute isAuth={isAuth}>
+                <PublicPrompts />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
             element={

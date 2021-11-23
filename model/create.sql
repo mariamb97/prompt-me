@@ -19,6 +19,7 @@ CREATE TABLE `prompts`(
     `user_id` INT NOT NULL,
     `category_id` INT NOT NULL, 
     `favorite` TINYINT(1) NOT NULL,
+    `public` TINYINT(1) NOT NULL,
     PRIMARY KEY(`id`),
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );

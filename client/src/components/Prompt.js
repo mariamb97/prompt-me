@@ -68,7 +68,24 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
   const updateFavoritePrompt = async () => {
     const { id } = userPrompt
     try {
-      const response = await fetch(`/prompts/${id}/favorite`, {
+      const response = await fetch(`/prompts/${id}/favorites`, {
+        method: "PUT",
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        }
+      });
+      const userPrompt = await response.json();
+      setUserPrompt(userPrompt[0])
+      refreshPrompts()
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const updatePublicPrompt = async () => {
+    const { id } = userPrompt
+    try {
+      const response = await fetch(`/prompts/${id}/publics`, {
         method: "PUT",
         headers: {
           authorization: "Bearer " + localStorage.getItem("token"),
@@ -87,6 +104,10 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
     updateFavoritePrompt()
   }
 
+  const handleTogglePublicPrompt = () => {
+    updatePublicPrompt()
+  }
+
 
   return (
     <article className="prompts">
@@ -98,21 +119,9 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
         <div className="prompts__requirements">
           {prompt.requirements}
         </div>
-        {/* <div className="prompts__requirements">
-          <textarea value={prompt.requirements} ></textarea>
-        </div> */}
       </section>
 
       <footer className="prompts__footer">
-        {/* 
-          This is a feature to show the forks of each prompt, not yet implemented.
-          <section>
-            <p>Links:</p>
-                {prompt.prompt_links &&
-                    prompt.prompt_links.split("|").map((e, i) => <p key={i}>{e}</p>)}
-            </section>
-            
-            <button>Associate links</button> */}
         <div className="prompts-footer__author">
           <a href="/profile">
             <div>
@@ -125,7 +134,7 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
         </div>
         <div className="prompts-footer__options">
           <img className={`heart ${prompt.favorite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggleFavorite()} />
-          <button>Fork</button>
+          {userPrompt.public ? <button onClick={() => handleTogglePublicPrompt()}>Set as private</button> : <button onClick={() => handleTogglePublicPrompt()}>Set as public</button>}
           <button onClick={(event) => handleDelete(event, prompt.id)}>Delete</button>
         </div>
       </footer>

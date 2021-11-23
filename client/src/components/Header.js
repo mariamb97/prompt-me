@@ -45,6 +45,9 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
               <li>
                 <Link to="/categories">CATEGORIES</Link>
               </li>
+              <li>
+                <Link to="/public">PUBLIC PROMPTS</Link>
+              </li>
             </ul>
           </nav>
           <div className="avatar">
