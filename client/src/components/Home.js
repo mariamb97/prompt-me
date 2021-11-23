@@ -3,24 +3,44 @@ import Prompt from "./Prompt";
 import "./Prompt.css"
 
 
-function Home({ userCategories, userPrompts, getFilteredPromptsByCategory, setUserPrompts }) {
+function Home({ userCategories, commonCategories, userPrompts, getFilteredPromptsByCategory, setUserPrompts }) {
   const [currentCategory, setCurrentCategory] = useState({})
 
 
   const handleFilterAll = () => {
     getFilteredPromptsByCategory();
+    setCurrentCategory({})
   };
 
-  const handleClickCategory = (category, categoryId) => {
+  const handleClickCategory = (category) => {
     setCurrentCategory(category)
-    getFilteredPromptsByCategory(categoryId);
+    getFilteredPromptsByCategory(category.id);
   };
 
+  const handleClickFavorites = () => {
+    getUserFavoritePrompts()
+  }
 
   const handleDelete = (event, promptId) => {
     event.preventDefault()
     deletePrompt(promptId);
   };
+
+  const getUserFavoritePrompts = async () => {
+    try {
+      const response = await fetch("/prompts/users/favorites", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const userFavoritePrompts = await response.json();
+      if (!userFavoritePrompts.message) {
+        setUserPrompts(userFavoritePrompts);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const deletePrompt = async (promptId) => {
     let queryString = ""
@@ -53,11 +73,14 @@ function Home({ userCategories, userPrompts, getFilteredPromptsByCategory, setUs
           <li>
             <button onClick={() => handleFilterAll()}>All</button>
           </li>
+          {commonCategories[0] && <li> <button onClick={() => handleClickFavorites(commonCategories[1])} > {commonCategories[0].name}</button> </li>}
+          {commonCategories[1] && <li> <button onClick={() => handleClickCategory(commonCategories[1])}>{commonCategories[1].name}</button> </li>}
+
           {userCategories &&
             userCategories
               .map((category, i) => (
                 <li key={i}>
-                  <button onClick={() => handleClickCategory(category, category.id)}>
+                  <button onClick={() => handleClickCategory(category)}>
                     {category.name}
                   </button>
                 </li>
@@ -66,9 +89,9 @@ function Home({ userCategories, userPrompts, getFilteredPromptsByCategory, setUs
       </div>
       {userPrompts &&
         userPrompts.map((prompt) => (
-          <Prompt key={prompt.id} prompt={prompt} setUserPrompts={setUserPrompts} handleDelete={handleDelete} />
+          <Prompt key={prompt.id} prompt={prompt} getFilteredPromptsByCategory={getFilteredPromptsByCategory} handleDelete={handleDelete} />
         ))}
-    </section>
+    </section >
   );
 }
 

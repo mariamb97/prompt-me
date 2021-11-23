@@ -1,29 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import User from "../img/user.svg";
 import Heart from "../img/heart-solid.svg"
-
-let processChange
-
-function debounce(func, timeout = 300) {
-  console.log("debounce")
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
-}
+import UseDebounce from "../hooks/useDebounce";
 
 
-export default function Prompt({ prompt, handleDelete, setUserPrompts }) {
-  let [favourite, setFavourite] = useState(false);
+export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCategory }) {
   const [userPrompt, setUserPrompt] = useState(prompt)
   // const { current } = useRef({ data: userPrompt, timer: null });
 
-  const handleToggle = () => {
-    setFavourite(!favourite);
+  let debouncedUserPrompt
+  if (userPrompt) {
+    debouncedUserPrompt = UseDebounce(userPrompt.text, 600)
   }
 
 
+  useEffect(() => {
+    if (userPrompt) {
+      updatePrompt()
+    }
+  }, [debouncedUserPrompt])
+
+
+  const refreshPrompts = () => {
+    if (prompt !== userPrompt) {
+      getFilteredPromptsByCategory(prompt.category_id)
+      window.scrollTo(0, 0)
+    }
+  }
 
   const handleChangeTextInput = (event) => {
     event.preventDefault()
@@ -39,14 +42,10 @@ export default function Prompt({ prompt, handleDelete, setUserPrompts }) {
     //   updatePrompt()
     // }, 1000);
 
-    processChange()
-
-
   }
 
   const updatePrompt = async () => {
     const { text, id } = userPrompt
-    console.log("updating")
     try {
       const response = await fetch(`/prompts/${id}`, {
         method: "PUT",
@@ -58,39 +57,50 @@ export default function Prompt({ prompt, handleDelete, setUserPrompts }) {
           text: text,
         }),
       });
-      const userPrompts = await response.json();
-      if (userPrompt.text) {
-        console.log(userPrompts)
-        // setUserPrompt(userPrompts[0]);
-        // setUserPrompts(userPrompts)
-      }
+      const userPrompt = await response.json();
+      setUserPrompt(userPrompt[0])
+      refreshPrompts()
     } catch (err) {
       console.log(err);
     }
   }
 
-  if (!processChange) processChange = debounce(updatePrompt)
+  const updateFavoritePrompt = async () => {
+    const { id } = userPrompt
+    try {
+      const response = await fetch(`/prompts/${id}/favorite`, {
+        method: "PUT",
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        }
+      });
+      const userPrompt = await response.json();
+      setUserPrompt(userPrompt[0])
+      refreshPrompts()
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
+  const handleToggleFavorite = () => {
+    updateFavoritePrompt()
+  }
+
 
   return (
     <article className="prompts">
-      {/* <section className="prompts__main">
-        <p>#{prompt.name}</p>
-        <p className="prompts__description">{prompt.text}</p>
-        <div className="prompts__requirements">
-          {prompt.requirements}
-        </div>
-        <p className="prompts__categories">{prompt.name}</p>
-      </section> */}
-
       <section className="prompts__main">
         <p>#{prompt.name}</p>
         <div className="prompts__description" >
           <textarea name="text" id="prompt_text_area" value={userPrompt.text} onChange={handleChangeTextInput} ></textarea>
         </div>
+        <div className="prompts__requirements">
+          {prompt.requirements}
+        </div>
         {/* <div className="prompts__requirements">
           <textarea value={prompt.requirements} ></textarea>
         </div> */}
-
       </section>
 
       <footer className="prompts__footer">
@@ -114,9 +124,8 @@ export default function Prompt({ prompt, handleDelete, setUserPrompts }) {
           </div>
         </div>
         <div className="prompts-footer__options">
-          <img className={`heart ${favourite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggle()} />
+          <img className={`heart ${prompt.favorite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggleFavorite()} />
           <button>Fork</button>
-          <button>Edit</button>
           <button onClick={(event) => handleDelete(event, prompt.id)}>Delete</button>
         </div>
       </footer>

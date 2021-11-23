@@ -1,12 +1,31 @@
+h2 {
+  margin-top: 4%;
+  margin-left: 2%;
+}
+
 #form-profile-user {
-  display: inline;
-  /* flex-wrap: nowrap; */
+  display: inline-block;
+  width: 100%;
+
+  margin: 8%;
+  margin-top: 5%;
+}
+#profile-user-email-input {
+  margin-left: 90px;
 }
 
 .profile-user-input {
-  padding: 1%;
+  width: 40%;
+  padding: 1.5%;
+  margin-left: 10%;
 }
 
 .profile-user-label {
   padding: 5%;
+  margin-left: 8%;
+}
+
+#profile-user-submit-button {
+  margin-top: 8%;
+  margin-left: 40%;
 }

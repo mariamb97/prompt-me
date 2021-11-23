@@ -19,8 +19,6 @@ export default function User({ onSuccess, getUserCategories }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setAlert(null)
-    // getUser();
     logIn()
   }
 
@@ -39,10 +37,15 @@ export default function User({ onSuccess, getUserCategories }) {
           }),
         });
         const data = await response.json();
-        localStorage.setItem("token", data.token);
-        onSuccess(true)
-        getUserCategories()
-        navigate("/")
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          onSuccess(true)
+          getUserCategories()
+          navigate("/")
+        }
+        else {
+          setAlert(data.message)
+        }
       } catch (err) {
         setAlert(err);
         console.log(err);

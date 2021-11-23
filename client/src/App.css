@@ -118,10 +118,13 @@ nav > * {
   padding: 15px;
   /* text-align: center; */
   border-top: 0.2rem solid var(--extra);
+  /* margin: auto; */
+  display: inline-flex;
 }
 
 .avatar img {
-  width: 20%;
+  width: 30%;
+  margin: 2%;
 }
 
 /* ------- 5. LISTS ---------- */

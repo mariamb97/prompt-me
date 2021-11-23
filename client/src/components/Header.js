@@ -3,6 +3,8 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import User from "../img/user.svg";
 // import Logo from "../img/logo.png";
 import "../App.css";
+import "./Header.css"
+
 
 export default function Header({ onSuccess, isAuth, setUserCategories }) {
 
@@ -46,15 +48,10 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
             </ul>
           </nav>
           <div className="avatar">
-            {/* <Link to="/authentication">
-          <img src={User} alt="user avatar"></img>
-        </Link> */}
             <Link to="/profile">
               <img src={User} alt="user avatar"></img>
             </Link>
-
-
-            <button onClick={logOut}>Log Out</button>
+            <button onClick={logOut} id="header-logout-button">Log Out</button>
           </div>
           <div>  <Outlet /></div>
         </div>

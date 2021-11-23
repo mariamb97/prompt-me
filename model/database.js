@@ -24,7 +24,7 @@ con.connect(function (err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(
-      "Tables creations `categories`, `prompts`, and `users` were successful!"
+      "Tables creations `categories`, `prompts`, and `users` were successful. 1 row was added to `users`. 2 rows were added to `categories`"
     );
 
     console.log("Closing...");

@@ -26,6 +26,16 @@ router.get('/users', userMustBeLoggedIn, async function (req, res) {
   }
 });
 
+router.get('/public', userMustBeLoggedIn, async function (req, res) {
+  try {
+    const results = await db(`SELECT * FROM categories WHERE user_id = 1 ;`);
+    res.send(results.data);
+
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 router.get("/:id", categoryMustExist, async function (req, res) {
   res.send(req.category);

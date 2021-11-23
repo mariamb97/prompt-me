@@ -65,16 +65,14 @@ function Profile() {
     return (
 
         <div className="main">
+            <h2>User Information</h2>
             <form id="form-profile-user" >
-                <div>
-                    <label htmlFor="profile-user-nickname-input" className="profile-user-label"> Username</label>
+                <label htmlFor="profile-user-nickname-input" className="profile-user-label"> Username
                     <input type="text" name="nickname" id="profile-user-nickname-input" className="profile-user-input" value={user.nickname} onChange={handleChangeUserInput} />
-                </div>
-                <div>
-                    <label htmlFor="profile-user-firstname-input" className="profile-user-label">  First Name </label>
+                </label>
+                <label htmlFor="profile-user-firstname-input" className="profile-user-label">  First Name
                     <input type="text" name="firstname" id="profile-user-firstname-input" className="profile-user-input" value={user.firstname} onChange={handleChangeUserInput} />
-
-                </div>
+                </label>
                 <label htmlFor="profile-user-lastname-input" className="profile-user-label">
                     Last Name
                     <input type="text" name="lastname" id="profile-user-lastname-input" className="profile-user-input" value={user.lastname} onChange={handleChangeUserInput} />
@@ -83,7 +81,7 @@ function Profile() {
                     Email
                     <input type="text" name="email" id="profile-user-email-input" className="profile-user-input" value={user.email} onChange={handleChangeUserInput} />
                 </label>
-                <button type="sumit" onClick={(event) => handleSubmitUpdateUser(event)}>Submit</button>
+                <button type="sumit" id="profile-user-submit-button" onClick={(event) => handleSubmitUpdateUser(event)}>Submit</button>
             </form>
         </div>
     )

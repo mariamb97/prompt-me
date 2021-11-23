@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AddPrompt({ userCategories, setUserPrompts }) {
+export default function AddPrompt({ userCategories, commonCategory, setUserPrompts }) {
 
   let [alert, setAlert] = useState(null);
   let [prompt, setPrompt] = useState(null);
-  let [descriptionInput, setDescription] = useState("");
+  let [textInput, setTextInput] = useState("");
   let [requirementsInput, setRequirements] = useState("");
   let [categoryInput, setCategories] = useState("");
 
-  const handleChangeDescription = (e) => setDescription(e.target.value);
+  const handleChangeDescription = (e) => setTextInput(e.target.value);
   const handleChangeRequirements = (e) => setRequirements(e.target.value);
   const handleChangeCategories = (e) => setCategories(e.target.value);
 
@@ -20,7 +20,7 @@ export default function AddPrompt({ userCategories, setUserPrompts }) {
 
 
   const addPrompt = async () => {
-    if (descriptionInput && categoryInput) {
+    if (textInput && categoryInput) {
       try {
         const res = await fetch("/prompts", {
           method: "POST",
@@ -29,13 +29,13 @@ export default function AddPrompt({ userCategories, setUserPrompts }) {
             authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({
-            description: descriptionInput,
+            text: textInput,
             requirements: requirementsInput,
             category_id: categoryInput,
           }),
         });
 
-        setDescription("");
+        setTextInput("");
         setRequirements("");
         setCategories("");
 
@@ -67,13 +67,13 @@ export default function AddPrompt({ userCategories, setUserPrompts }) {
               name="input_description"
               rows="5"
               required
-              value={descriptionInput}
+              value={textInput}
               onChange={(e) => handleChangeDescription(e)}
             ></textarea>
           </div>
           <div className="textarea">
             <label htmlFor="input_requirements">
-              Requirements (separate with "|")
+              Requirements
             </label>
             <textarea
               id="input_requirements"
@@ -91,6 +91,8 @@ export default function AddPrompt({ userCategories, setUserPrompts }) {
               onChange={(e) => handleChangeCategories(e)}
             >
               <option>Choose a category</option>
+              {commonCategory ? <option value={commonCategory.id}> {commonCategory.name}</option> : ""}
+
               {userCategories &&
                 userCategories.map((category, i) => (
                   <option key={i} value={`${category.id}`}>

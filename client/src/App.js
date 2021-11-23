@@ -15,11 +15,14 @@ import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"))
+  const [commonCategories, setCommonCategories] = useState([])
   const [userCategories, setUserCategories] = useState([]);
   const [userPrompts, setUserPrompts] = useState([]);
 
 
+
   useEffect(() => {
+    getCommonCategories();
     getUserCategories()
     getFilteredPromptsByCategory()
   }, []);
@@ -27,6 +30,23 @@ function App() {
 
   function onSuccess(boolean) {
     setIsAuth(boolean)
+  }
+
+  const getCommonCategories = async () => {
+    try {
+      const response = await fetch("/categories/public", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const commonCategories = await response.json();
+      if (!commonCategories.message) {
+        console.log(commonCategories)
+        setCommonCategories(commonCategories);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const getUserCategories = async () => {
@@ -45,22 +65,21 @@ function App() {
     }
   }
 
-  const getFilteredPromptsByCategory = (categoryId) => {
-    let queryString = ""
-    if (categoryId) queryString = `/?categories[]=${categoryId}`
+  const getFilteredPromptsByCategory = async (categoryId) => {
+    try {
+      let queryString = ""
+      if (categoryId) queryString = `/?categories[]=${categoryId}`
 
-    fetch(`/prompts/users${queryString}`, {
-      headers: {
-        authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((prompts) => {
-        setUserPrompts(prompts)
-      })
-      .catch((error) => {
-        console.log(error);
+      const response = await fetch(`/prompts/users${queryString}`, {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
+      const prompts = await response.json();
+      setUserPrompts(prompts)
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   function addUserCategory(userCategory) {
@@ -78,21 +97,21 @@ function App() {
           <Route path="/"
             element={
               <ProtectedRoute isAuth={isAuth}>
-                <Home userCategories={userCategories} userPrompts={userPrompts} setUserPrompts={setUserPrompts} getFilteredPromptsByCategory={getFilteredPromptsByCategory} />
+                <Home userCategories={userCategories} commonCategories={commonCategories} userPrompts={userPrompts} setUserPrompts={setUserPrompts} getFilteredPromptsByCategory={getFilteredPromptsByCategory} />
               </ProtectedRoute>
             }
           />
           <Route path="/add"
             element={
               <ProtectedRoute isAuth={isAuth}>
-                <AddPrompt userCategories={userCategories} setUserPrompts={setUserPrompts} />
+                <AddPrompt userCategories={userCategories} commonCategory={commonCategories[1]} setUserPrompts={setUserPrompts} />
               </ProtectedRoute>
             }
           />
           <Route path="/categories"
             element={
               <ProtectedRoute isAuth={isAuth}>
-                <Categories userCategories={userCategories} />
+                <Categories userCategories={userCategories} commonCategories={commonCategories} />
               </ProtectedRoute>
             }
           >
