@@ -29,3 +29,10 @@ h2 {
   margin-top: 8%;
   margin-left: 40%;
 }
+
+#prompt-data {
+  margin-left: 50px;
+}
+#prompt-time {
+  margin-left: 10px;
+}

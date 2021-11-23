@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Prompt from "./Prompt";
 import "./Prompt.css"
 
 
 function Home({ userCategories, commonCategories, userPrompts, getFilteredPromptsByCategory, setUserPrompts }) {
   const [currentCategory, setCurrentCategory] = useState({})
+
+  useEffect(() => {
+    getFilteredPromptsByCategory();
+  }, [])
 
 
   const handleFilterAll = () => {
@@ -66,16 +70,15 @@ function Home({ userCategories, commonCategories, userPrompts, getFilteredPrompt
 
   return (
     <section className="main" id="home">
-      <h3>Take your prompt!</h3>
-      <p>Popular categories:</p>
+      <h3>PROMPTS</h3>
+      <p>Select a category:</p>
       <div className="filters_nav">
         <ul>
           <li>
             <button onClick={() => handleFilterAll()}>All</button>
           </li>
-          {commonCategories[0] && <li> <button onClick={() => handleClickFavorites(commonCategories[1])} > {commonCategories[0].name}</button> </li>}
-          {commonCategories[1] && <li> <button onClick={() => handleClickCategory(commonCategories[1])}>{commonCategories[1].name}</button> </li>}
-
+          <li>{commonCategories[0] && <button onClick={() => handleClickFavorites(commonCategories[1])} > {commonCategories[0].name}</button>}</li>
+          <li>  {commonCategories[1] && <button onClick={() => handleClickCategory(commonCategories[1])}>{commonCategories[1].name}</button>}</li>
           {userCategories &&
             userCategories
               .map((category, i) => (
@@ -87,11 +90,13 @@ function Home({ userCategories, commonCategories, userPrompts, getFilteredPrompt
               ))}
         </ul>
       </div>
-      {userPrompts &&
-        userPrompts.map((prompt) => (
-          <Prompt key={prompt.id} prompt={prompt} getFilteredPromptsByCategory={getFilteredPromptsByCategory} handleDelete={handleDelete} />
-        ))}
-    </section >
+      <div>
+        {userPrompts &&
+          userPrompts.map((prompt, index) => (
+            <Prompt key={prompt.id} Prompt={prompt} PromptIndex={index} setUserPrompts={setUserPrompts} getUserFavoritePrompts={getUserFavoritePrompts} handleDelete={handleDelete} />
+          ))}
+      </div>
+    </section>
   );
 }
 

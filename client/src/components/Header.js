@@ -37,7 +37,7 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
 
             <ul className="list">
               <li>
-                <Link to="/">HOME</Link>
+                <Link to="/" className="home-link">HOME</Link>
               </li>
               <li>
                 <Link to="/add">ADD PROMPT</Link>

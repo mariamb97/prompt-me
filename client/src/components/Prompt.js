@@ -4,8 +4,8 @@ import Heart from "../img/heart-solid.svg"
 import UseDebounce from "../hooks/useDebounce";
 
 
-export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCategory }) {
-  const [userPrompt, setUserPrompt] = useState(prompt)
+export default function Prompt({ Prompt, handleDelete, setUserPrompts, PromptIndex, getUserFavoritePrompts }) {
+  const [userPrompt, setUserPrompt] = useState(Prompt)
   // const { current } = useRef({ data: userPrompt, timer: null });
 
   let debouncedUserPrompt
@@ -18,15 +18,21 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
     if (userPrompt) {
       updatePrompt()
     }
-  }, [debouncedUserPrompt])
+  }, [debouncedUserPrompt], [userPrompt.favorite])
 
-
+  const promptIndex = PromptIndex
+  const prompt = Prompt
   const refreshPrompts = () => {
     if (prompt !== userPrompt) {
-      getFilteredPromptsByCategory(prompt.category_id)
-      window.scrollTo(0, 0)
+      setUserPrompts((prompts) => [...prompts.slice(0, promptIndex), userPrompt, ...prompts.slice(promptIndex + 1)])
     }
   }
+
+  const refreshFavoritePrompt = () => {
+    setUserPrompts((prompts) => [...prompts.slice(0, promptIndex), userPrompt, ...prompts.slice(promptIndex + 1)])
+  }
+
+
 
   const handleChangeTextInput = (event) => {
     event.preventDefault()
@@ -74,13 +80,14 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
           authorization: "Bearer " + localStorage.getItem("token"),
         }
       });
-      const userPrompt = await response.json();
-      setUserPrompt(userPrompt[0])
-      refreshPrompts()
+      const uptdatedUserPrompt = await response.json();
+      setUserPrompt(uptdatedUserPrompt[0])
+      refreshFavoritePrompt()
     } catch (err) {
       console.log(err);
     }
   }
+
 
   const updatePublicPrompt = async () => {
     const { id } = userPrompt
@@ -100,13 +107,24 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
   }
 
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (favorite) => {
     updateFavoritePrompt()
+    if (favorite) {
+      getUserFavoritePrompts()
+    }
   }
 
   const handleTogglePublicPrompt = () => {
     updatePublicPrompt()
   }
+
+  let promptData = userPrompt["updated_at"]
+  let promptTime
+  if (userPrompt) {
+    promptData = promptData.split('T')
+    promptTime = promptData[1].substr(0, 5)
+  }
+
 
 
   return (
@@ -131,11 +149,13 @@ export default function Prompt({ prompt, handleDelete, getFilteredPromptsByCateg
           <div>
             <p>{prompt.nickname}</p>
           </div>
+          <span id="prompt-data">{promptData[0]}</span>
+          <span id="prompt-time">{promptTime}</span>
         </div>
         <div className="prompts-footer__options">
-          <img className={`heart ${prompt.favorite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggleFavorite()} />
+          <img className={`heart ${userPrompt.favorite ? "favourite" : null}`} src={Heart} alt="heart" onClick={() => handleToggleFavorite(userPrompt.favorite)} />
           {userPrompt.public ? <button onClick={() => handleTogglePublicPrompt()}>Set as private</button> : <button onClick={() => handleTogglePublicPrompt()}>Set as public</button>}
-          <button onClick={(event) => handleDelete(event, prompt.id)}>Delete</button>
+          <button onClick={(event) => handleDelete(event, userPrompt.id)}>Delete</button>
         </div>
       </footer>
     </article>

@@ -42,7 +42,6 @@ function App() {
       });
       const commonCategories = await response.json();
       if (!commonCategories.message) {
-        console.log(commonCategories)
         setCommonCategories(commonCategories);
       }
     } catch (err) {

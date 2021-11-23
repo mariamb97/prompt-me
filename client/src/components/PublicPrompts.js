@@ -26,6 +26,8 @@ export default function PublicPrompts() {
 
     return (
         <div className="main">
+            <h3>Take your prompt!</h3>
+            <p>Popular categories:</p>
             {publicPrompts && publicPrompts.map((prompt) => (
                 <PublicPrompt key={prompt.id} PublicPrompt={prompt} />
             ))}

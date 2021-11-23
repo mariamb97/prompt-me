@@ -22,7 +22,7 @@
   --ternary: rgb(244 249 255);
   --extra: rgb(114, 142, 179);
   --titles: rgb(37, 54, 77);
-  --links: red;
+  --links: rgb(110, 110, 110);
 }
 
 #root {
@@ -118,13 +118,21 @@ nav > * {
   padding: 15px;
   /* text-align: center; */
   border-top: 0.2rem solid var(--extra);
+  width: 200px;
   /* margin: auto; */
   display: inline-flex;
 }
 
 .avatar img {
-  width: 30%;
+  width: 50px;
+  /* height: 90%; */
   margin: 2%;
+}
+
+.avatar img:hover {
+  border-radius: 120px;
+  background-color: rgb(176, 186, 199);
+  opacity: 0.9;
 }
 
 /* ------- 5. LISTS ---------- */
@@ -147,6 +155,13 @@ form button,
 .filters_nav button {
   border-radius: 30px;
   padding: 15px 20px;
+  font-size: small;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filters_nav button:hover {
+  background-color: rgb(204, 204, 204);
 }
 
 .prompts-footer__options button {
@@ -220,7 +235,8 @@ form button,
 }
 
 .favourite {
-  background-color: red;
+  background-color: rgb(219, 199, 247);
+  border-radius: 1000px;
 }
 
 /* --------- 8. FORMS --------- */
