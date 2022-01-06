@@ -1,15 +1,15 @@
 #header-logout-button {
   margin-left: 90px;
-  margin-top: 5px;
-  padding: 4%;
-  border: 2.667px solid rgb(37, 54, 77);
+  margin-top: 3px;
+  padding: 4px;
+  border: 3.3px solid rgb(37, 54, 77);
   border-radius: 80px;
   height: 53px;
   width: 53px;
   background-color: lightsteelblue;
   color: rgb(37, 54, 77);
-  font-size: 90%;
-  font-weight: 700;
+  font-size: 82%;
+  font-weight: 800;
   cursor: pointer;
 }
 

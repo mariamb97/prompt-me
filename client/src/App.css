@@ -14,7 +14,9 @@
 -------- */
 
 /* ---- 1. Variables & Root --- */
-
+* {
+  user-select: none;
+}
 :root {
   --primary: gainsboro;
   --primary-sft: rgb(231, 239, 248);

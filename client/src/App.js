@@ -90,7 +90,7 @@ function App() {
   return (
     <div id="wrapper">
       <BrowserRouter>
-        <Header onSuccess={onSuccess} isAuth={isAuth} setUserCategories={setUserCategories} />
+        <Header onSuccess={onSuccess} isAuth={isAuth} setUserCategories={setUserCategories} setUserPrompts={setUserPrompts} />
         <Routes>
           <Route path="/authentication" element={<UserAuthentication onSuccess={onSuccess} getUserCategories={getUserCategories} />} />
           <Route path="/register" element={<AddUser />} />

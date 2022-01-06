@@ -93,7 +93,7 @@ export default function User({ onSuccess, getUserCategories }) {
 
   return (
     <section className="main" id="user">
-      <h1>User section</h1>
+      <h1>Please Register or Log In</h1>
       <section className="user__wrap">
         <article>
           <h3>Log In</h3>

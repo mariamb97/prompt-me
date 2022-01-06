@@ -6,7 +6,7 @@ import "../App.css";
 import "./Header.css"
 
 
-export default function Header({ onSuccess, isAuth, setUserCategories }) {
+export default function Header({ onSuccess, isAuth, setUserCategories, setUserPrompts }) {
 
   const navigate = useNavigate()
 
@@ -14,6 +14,7 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
     localStorage.removeItem("token")
     onSuccess(false)
     setUserCategories([])
+    setUserPrompts([])
     navigate("/authentication")
   }
 
@@ -56,7 +57,7 @@ export default function Header({ onSuccess, isAuth, setUserCategories }) {
             </Link>
             <button onClick={logOut} id="header-logout-button">Log Out</button>
           </div>
-          <div>  <Outlet /></div>
+          <Outlet />
         </div>
       }
     </header>

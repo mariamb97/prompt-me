@@ -40,6 +40,7 @@ export default function Category({ getUserCategories }) {
       const userCategory = await response.json();
       if (!userCategory.message) {
         setUserCategory(userCategory[0]);
+        getUserCategories()
       }
     } catch (err) {
       console.log(err);

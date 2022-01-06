@@ -6,7 +6,6 @@ import UseDebounce from "../hooks/useDebounce";
 
 export default function Prompt({ Prompt, handleDelete, setUserPrompts, PromptIndex, getUserFavoritePrompts }) {
   const [userPrompt, setUserPrompt] = useState(Prompt)
-  // const { current } = useRef({ data: userPrompt, timer: null });
 
   let debouncedUserPrompt
   if (userPrompt) {
@@ -15,10 +14,10 @@ export default function Prompt({ Prompt, handleDelete, setUserPrompts, PromptInd
 
 
   useEffect(() => {
-    if (userPrompt) {
+    if (userPrompt && userPrompt.id) {
       updatePrompt()
     }
-  }, [debouncedUserPrompt], [userPrompt.favorite])
+  }, [debouncedUserPrompt])
 
   const promptIndex = PromptIndex
   const prompt = Prompt
